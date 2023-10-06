@@ -22,3 +22,6 @@ $app->get('/hello', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Reporting! Hello there!");            
     return $response;
 });
+
+// ROUTE: GET /recalls
+$app->get('/recalls', [RecallsController::class, 'fetchAll']);
