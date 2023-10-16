@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2023 at 09:23 PM
+-- Generation Time: Oct 16, 2023 at 11:05 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `recalls_db`
 --
-CREATE DATABASE IF NOT EXISTS `recalls_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
-USE `recalls_db`;
 
 -- --------------------------------------------------------
 
@@ -30,12 +28,15 @@ USE `recalls_db`;
 --
 
 CREATE TABLE `cars` (
-  `license_plate` varchar(9) NOT NULL,
+  `car_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `model` varchar(50) DEFAULT NULL,
-  `purchase_date` date DEFAULT NULL,
-  `PersonID` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `model` int(11) NOT NULL,
+  `purchase_date` int(11) NOT NULL,
+  `dealership` varchar(50) NOT NULL,
+  `insurance_nb` varchar(9) NOT NULL,
+  `mileage` int(11) NOT NULL,
+  `color` varchar(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -45,12 +46,12 @@ CREATE TABLE `cars` (
 
 CREATE TABLE `customers` (
   `customer_id` int(11) NOT NULL,
-  `first_name` varchar(50) DEFAULT NULL,
-  `last_name` varchar(50) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `area_code` varchar(8) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `area_code` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -61,13 +62,13 @@ CREATE TABLE `customers` (
 CREATE TABLE `instances` (
   `instances_id` int(11) NOT NULL,
   `recall_id` int(11) NOT NULL,
-  `license_plate` varchar(9) NOT NULL,
-  `notification_date` date DEFAULT NULL,
-  `instances_note` varchar(100) DEFAULT NULL,
-  `bring_in_date` date DEFAULT NULL,
-  `expected_leave` date DEFAULT NULL,
-  `job_done` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `car_id` int(11) NOT NULL,
+  `notification_date` date NOT NULL,
+  `instances_note` varchar(100) NOT NULL,
+  `bring_in_date` date NOT NULL,
+  `expected_leave` date NOT NULL,
+  `job_done` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -83,6 +84,17 @@ CREATE TABLE `manufacturers` (
   `founded_year` varchar(50) NOT NULL,
   `website` varchar(75) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `manufacturers`
+--
+
+INSERT INTO `manufacturers` (`manufacturer_id`, `manufacturer_name`, `country`, `city`, `founded_year`, `website`) VALUES
+(1, 'Daimler Trucks North America, LLC\r\n', 'Canada', 'Calgary', '1942', 'https://northamerica.daimlertruck.com/'),
+(2, 'Daimler Trucks North America, LLC\r\n', 'Canada', 'Mississauga', '1942', 'https://northamerica.daimlertruck.com/'),
+(3, 'Mercedes-Benz USA, LLC\r\n', 'Canada', 'Kelowna', '1926', 'https://shop.mercedes-benz.com/en-ca/connect'),
+(4, 'Winnebago Industries, Inc.\r\n', 'Canada', 'Cornwall', '1958', 'https://www.winnebago.com'),
+(5, 'PACCAR Incorporated\r\n', 'United States', 'Bellevue', '1905', 'https://www.paccar.com/');
 
 -- --------------------------------------------------------
 
@@ -125,12 +137,12 @@ CREATE TABLE `recalls` (
 
 CREATE TABLE `repairs` (
   `repair_id` int(11) NOT NULL,
-  `repair_date` date DEFAULT NULL,
-  `repair_description` varchar(100) DEFAULT NULL,
-  `repair_cost` decimal(10,2) DEFAULT NULL,
-  `repair_status` varchar(50) DEFAULT NULL,
-  `repair_estimate_time` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `repair_date` date NOT NULL,
+  `repair_description` varchar(100) NOT NULL,
+  `repair_cost` decimal(10,0) NOT NULL,
+  `repair_status` varchar(50) NOT NULL,
+  `repair_estimate_time` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -140,8 +152,8 @@ CREATE TABLE `repairs` (
 -- Indexes for table `cars`
 --
 ALTER TABLE `cars`
-  ADD PRIMARY KEY (`license_plate`),
-  ADD KEY `FKEY_customer` (`customer_id`);
+  ADD PRIMARY KEY (`car_id`),
+  ADD KEY `cars_customer_id` (`customer_id`);
 
 --
 -- Indexes for table `customers`
@@ -154,8 +166,8 @@ ALTER TABLE `customers`
 --
 ALTER TABLE `instances`
   ADD PRIMARY KEY (`instances_id`),
-  ADD KEY `FKEY_recall` (`recall_id`),
-  ADD KEY `FKEY_cars` (`license_plate`);
+  ADD KEY `instances_recall_id` (`recall_id`),
+  ADD KEY `instances_car_id` (`car_id`);
 
 --
 -- Indexes for table `manufacturers`
@@ -175,7 +187,7 @@ ALTER TABLE `models`
 --
 ALTER TABLE `recalls`
   ADD PRIMARY KEY (`recall_id`),
-  ADD KEY `recalls_model_id` (`model_id`);
+  ADD KEY `recalls_models_id` (`model_id`);
 
 --
 -- Indexes for table `repairs`
@@ -188,10 +200,28 @@ ALTER TABLE `repairs`
 --
 
 --
+-- AUTO_INCREMENT for table `cars`
+--
+ALTER TABLE `cars`
+  MODIFY `car_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `instances`
+--
+ALTER TABLE `instances`
+  MODIFY `instances_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `manufacturers`
 --
 ALTER TABLE `manufacturers`
-  MODIFY `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `models`
@@ -206,6 +236,12 @@ ALTER TABLE `recalls`
   MODIFY `recall_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `repairs`
+--
+ALTER TABLE `repairs`
+  MODIFY `repair_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -213,15 +249,14 @@ ALTER TABLE `recalls`
 -- Constraints for table `cars`
 --
 ALTER TABLE `cars`
-  ADD CONSTRAINT `FKEY_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
-  ADD CONSTRAINT `cars_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`);
+  ADD CONSTRAINT `cars_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`);
 
 --
 -- Constraints for table `instances`
 --
 ALTER TABLE `instances`
-  ADD CONSTRAINT `FKEY_cars` FOREIGN KEY (`license_plate`) REFERENCES `cars` (`license_plate`),
-  ADD CONSTRAINT `FKEY_recall` FOREIGN KEY (`recall_id`) REFERENCES `recalls` (`recall_id`);
+  ADD CONSTRAINT `instances_car_id` FOREIGN KEY (`car_id`) REFERENCES `cars` (`car_id`),
+  ADD CONSTRAINT `instances_recall_id` FOREIGN KEY (`recall_id`) REFERENCES `recalls` (`recall_id`);
 
 --
 -- Constraints for table `models`
@@ -233,7 +268,7 @@ ALTER TABLE `models`
 -- Constraints for table `recalls`
 --
 ALTER TABLE `recalls`
-  ADD CONSTRAINT `recalls_model_id` FOREIGN KEY (`model_id`) REFERENCES `models` (`model_id`);
+  ADD CONSTRAINT `recalls_models_id` FOREIGN KEY (`model_id`) REFERENCES `models` (`model_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
