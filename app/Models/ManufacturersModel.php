@@ -12,6 +12,7 @@ class ManufacturersModel extends BaseModel
 
     public function getAll(array $filters)
     {
+        
         $query_values = [];
         $sql = "SELECT * FROM $this->table_name WHERE 1 ";
 
