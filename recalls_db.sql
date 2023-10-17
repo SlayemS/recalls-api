@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2023 at 11:05 PM
+-- Generation Time: Oct 17, 2023 at 03:09 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -90,11 +90,11 @@ CREATE TABLE `manufacturers` (
 --
 
 INSERT INTO `manufacturers` (`manufacturer_id`, `manufacturer_name`, `country`, `city`, `founded_year`, `website`) VALUES
-(1, 'Daimler Trucks North America, LLC\r\n', 'Canada', 'Calgary', '1942', 'https://northamerica.daimlertruck.com/'),
-(2, 'Daimler Trucks North America, LLC\r\n', 'Canada', 'Mississauga', '1942', 'https://northamerica.daimlertruck.com/'),
-(3, 'Mercedes-Benz USA, LLC\r\n', 'Canada', 'Kelowna', '1926', 'https://shop.mercedes-benz.com/en-ca/connect'),
-(4, 'Winnebago Industries, Inc.\r\n', 'Canada', 'Cornwall', '1958', 'https://www.winnebago.com'),
-(5, 'PACCAR Incorporated\r\n', 'United States', 'Bellevue', '1905', 'https://www.paccar.com/');
+(1, 'Daimler Trucks North America, LLC', 'Canada', 'Calgary', '1942', 'https://northamerica.daimlertruck.com/'),
+(2, 'Daimler Trucks North America, LLC', 'Canada', 'Mississauga', '1942', 'https://northamerica.daimlertruck.com/'),
+(3, 'Mercedes-Benz USA, LLC', 'Canada', 'Kelowna', '1926', 'https://shop.mercedes-benz.com/en-ca/connect'),
+(4, 'Winnebago Industries, Inc.', 'Canada', 'Cornwall', '1958', 'https://www.winnebago.com'),
+(5, 'PACCAR Incorporated', 'Canada', 'Bellevue', '1905', 'https://www.paccar.com/');
 
 -- --------------------------------------------------------
 
