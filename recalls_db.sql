@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2023 at 03:09 AM
+-- Generation Time: Oct 17, 2023 at 04:27 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -90,11 +90,11 @@ CREATE TABLE `manufacturers` (
 --
 
 INSERT INTO `manufacturers` (`manufacturer_id`, `manufacturer_name`, `country`, `city`, `founded_year`, `website`) VALUES
-(1, 'Daimler Trucks North America, LLC', 'Canada', 'Calgary', '1942', 'https://northamerica.daimlertruck.com/'),
-(2, 'Daimler Trucks North America, LLC', 'Canada', 'Mississauga', '1942', 'https://northamerica.daimlertruck.com/'),
-(3, 'Mercedes-Benz USA, LLC', 'Canada', 'Kelowna', '1926', 'https://shop.mercedes-benz.com/en-ca/connect'),
-(4, 'Winnebago Industries, Inc.', 'Canada', 'Cornwall', '1958', 'https://www.winnebago.com'),
-(5, 'PACCAR Incorporated', 'Canada', 'Bellevue', '1905', 'https://www.paccar.com/');
+(1, 'Mercedes-Benz, LLC', 'Canada', 'Calgary', '1926', 'https://www.mercedes-benz.ca/en/home'),
+(2, 'Mercedes-Benz, LLC', 'Canada', 'Kelowna', '1926', 'https://www.mercedes-benz.ca/en/home'),
+(3, 'Ford Motor Company', 'Canada', 'Weston', '1903', 'https://www.ford.ca/'),
+(4, 'Jayco, Inc.', 'Canada', 'St-Jerome', '1968', 'https://www.jayco.com/'),
+(5, 'Harley-Davidson Motor Company', 'Canada', 'Winnipeg', '1903', 'https://www.harley-davidson.com/ca/en/index.html');
 
 -- --------------------------------------------------------
 
@@ -112,6 +112,17 @@ CREATE TABLE `models` (
   `engine` varchar(30) NOT NULL,
   `power_type` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `models`
+--
+
+INSERT INTO `models` (`model_id`, `manufacturer_id`, `year`, `vehicle_type`, `fuel_type`, `transmission_type`, `engine`, `power_type`) VALUES
+(1, 1, 2023, 'sports', 'premium', 'automatic', 'V8', 'gasoline'),
+(2, 2, 2022, 'suv', 'N/A', 'single speed', 'N/A', 'electricity'),
+(3, 3, 2022, 'suv', 'regular', 'automatic', 'inline 4', 'gasoline'),
+(4, 4, 2024, 'rv', 'regular', 'automatic', 'V8', 'gasoline'),
+(5, 5, 2023, 'motorcycle', 'premium', 'manual', '121ci', 'gasoline');
 
 -- --------------------------------------------------------
 
@@ -227,7 +238,7 @@ ALTER TABLE `manufacturers`
 -- AUTO_INCREMENT for table `models`
 --
 ALTER TABLE `models`
-  MODIFY `model_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `model_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `recalls`

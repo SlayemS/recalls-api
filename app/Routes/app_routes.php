@@ -5,6 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\AboutController;
 use Vanier\Api\Controllers\ManufacturersController;
+use Vanier\Api\Controllers\ModelsController;
 
 // Import the app instance into this file's scope.
 global $app;
@@ -17,6 +18,8 @@ global $app;
 $app->get('/', [AboutController::class, 'handleAboutApi']); 
 
 $app->get('/manufacturers', [ManufacturersController::class, 'handleGetManufacturers']); 
+
+$app->get('/models', [ModelsController::class, 'handleGetModels']); 
 
 // ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
