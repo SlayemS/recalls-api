@@ -14,22 +14,10 @@ class ManufacturersModel extends BaseModel
     {
         $query_values = [];
         $sql = "SELECT * FROM $this->table_name WHERE 1 ";
-        if(isset($filters['title'])){
-            $sql .= "AND title LIKE CONCAT('%', :title, '%')";    
-            $query_values[':title'] = $filters['title'];
-        }
-        if(isset($filters['descr'])){
-            $sql .= "AND description LIKE CONCAT('%', :descr, '%')";    
-            $query_values[':descr'] = $filters['descr'];
-        }
-        //Doesn't work ↓
-        if(isset($filters['special_features'])){
-            $sql .= "AND 'special_features' LIKE CONCAT('%', :special_features, '%')";    
-            $query_values[':special_features'] = $filters['special_features'];
-        }
-        if(isset($filters['rating'])){
-            $sql .= "AND rating LIKE CONCAT('%',:rating, '%')";    
-            $query_values[':rating'] = $filters['rating'];
+
+        if(isset($filters['manufacturer_name'])){
+            $sql .= "AND manufacturer_name LIKE CONCAT('%', :manufacturer_name, '%')";    
+            $query_values[':manufacturer_name'] = $filters['manufacturer_name'];
         }
         return $this->paginate($sql,$query_values);
     }

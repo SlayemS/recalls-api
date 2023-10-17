@@ -116,6 +116,25 @@ class BaseModel
         return $stmt;
     }
 
+    protected function paginate($sql, $args = [], $fetchMode = PDO::FETCH_ASSOC)
+    {
+        $row_count = $this->count($sql, $args);
+        
+        $paging_helper = new PaginationHelper(
+            $this->current_page,
+            $this->records_per_page,
+            $row_count
+        );
+
+        $offset = $paging_helper->getOffset();
+        $sql .= " LIMIT $offset, $this->records_per_page";
+        
+        $data = $paging_helper->getPaginationInfo();
+        $data['data'] = $this->fetchAll($sql, $args);
+        return $data;
+       
+    }
+
     /**
      * Executes a query and gets an array of matching records.
      * 

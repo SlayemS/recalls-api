@@ -30,10 +30,10 @@ class ManufacturersController extends BaseController
         //     // throw new HttpBadRequestException($request,$validation_response);
         // }
         
-        $films = $this->manufacturers_model->getAll($filters);
+        $manufacturers = $this->manufacturers_model->getAll($filters);
 
         // $response->getBody()->write($films_json);
         // return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-        return $this->prepareOkResponse($response, (array)$films);
+        return $this->prepareOkResponse($response, (array)$manufacturers);
     }
 }
