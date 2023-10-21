@@ -38,6 +38,20 @@ CREATE TABLE `cars` (
   `color` varchar(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `cars`
+--
+
+INSERT INTO cars (customer_id, model, purchase_date, dealership, insurance_nb, mileage, color)
+VALUES (1, 1, '2021-10-22', 'BMW', '123456789', 130000, 'black'),
+(1, 2, '2023-10-22', 'Audi', '123456789', 80000, 'blue'),
+(1, 3, '2021-01-22', 'Voswagen', '123456789', 130000, 'black'),
+(2, 4, '2015-09-12', 'Toyota', '123456789', 130000, 'yellow'),
+(5, 5, '2016-02-16', 'Honda', '123456789', 2000, 'matt-black'),
+(2, 6, '2017-06-15', 'Ford', '123456789', 13000, 'red'),
+(4, 7, '2012-11-22', 'Chevrolet', '123456789', 46000, 'red'),
+(3, 8, '2011-10-22', 'Nissan', '123456789', 204000, 'green');
+
 -- --------------------------------------------------------
 
 --
