@@ -6,18 +6,18 @@ use Fig\Http\Message\StatusCodeInterface as HttpCodes;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
-use Vanier\Api\Models\RecallsModel;
+use Vanier\Api\Models\RepairsModel;
 
-class RecallsController extends BaseController
+class RepairsController extends BaseController
 {
-    private $recalls_model = null;
+    private $repairs_model = null;
 
     private array $rules = array(
         // Rules for validating Recalls' properties
     );
 
     public function __construct() {
-        $this->recalls_model = new RecallsModel();
+        $this->repairs_model = new RepairsModel();
     }
 
     public function handleGetRecalls(Request $request, Response $response, array $uri_args)
