@@ -16,14 +16,31 @@ class ModelsModel extends BaseModel
         $query_values = [];
         $sql = "SELECT * FROM $this->table_name WHERE 1 ";
 
-        if(isset($filters['vehicle_type'])){
-            $sql .= "AND vehicle_type LIKE CONCAT('%', :vehicle_type, '%')";    
-            $query_values[':vehicle_type'] = $filters['vehicle_type'];
-        }
         if(isset($filters['year'])){
             $sql .= "AND year LIKE CONCAT(:year, '%')";    
             $query_values[':year'] = $filters['year'];
         }
+        if(isset($filters['vehicle_type'])){
+            $sql .= "AND vehicle_type LIKE CONCAT('%', :vehicle_type, '%')";    
+            $query_values[':vehicle_type'] = $filters['vehicle_type'];
+        }
+        if(isset($filters['fuel_type'])){
+            $sql .= "AND fuel_type LIKE CONCAT('%', :fuel_type, '%')";    
+            $query_values[':fuel_type'] = $filters['fuel_type'];
+        }
+        if(isset($filters['transmission_type'])){
+            $sql .= "AND transmission_type LIKE CONCAT('%', :transmission_type, '%')";    
+            $query_values[':transmission_type'] = $filters['transmission_type'];
+        }
+        if(isset($filters['engine'])){
+            $sql .= "AND engine LIKE CONCAT(:engine, '%')";    
+            $query_values[':engine'] = $filters['engine'];
+        }
+        if(isset($filters['power_type'])){
+            $sql .= "AND power_type LIKE CONCAT('%', :power_type, '%')";    
+            $query_values[':power_type'] = $filters['power_type'];
+        }
+        
         return $this->paginate($sql,$query_values);
     }
 }

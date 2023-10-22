@@ -16,9 +16,9 @@ class ManufacturersModel extends BaseModel
         $query_values = [];
         $sql = "SELECT * FROM $this->table_name WHERE 1 ";
 
-        if(isset($filters['name'])){
-            $sql .= "AND manufacturer_name LIKE CONCAT('%', :name, '%')";    
-            $query_values[':name'] = $filters['name'];
+        if(isset($filters['country'])){
+            $sql .= "AND country LIKE CONCAT('%', :country, '%')";    
+            $query_values[':country'] = $filters['country'];
         }
         if(isset($filters['city'])){
             $sql .= "AND city LIKE CONCAT('%', :city, '%')";    
