@@ -71,7 +71,7 @@ CREATE TABLE `instances` (
   `instances_note` varchar(100) NOT NULL,
   `bring_in_date` date NOT NULL,
   `expected_leave_date` date NOT NULL,
-  `job_done` tinyint(1) NOT NULL
+  `job_done` boolean NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

@@ -71,14 +71,14 @@ VALUES (1, 1, 1, '2021-10-22', 'BMW', '123456789', 130000, 'black'),
 --
 
 INSERT INTO `instances` (`instance_id`, `recall_id`, `car_id`, `notification_date`, `instances_note`, `bring_in_date`, `expected_leave_date`, `job_done`)
-VALUES (1, 2, 2, '2021-05-03', 'airbag failure', '2021-10-25', '2021-10-26', 1),
-(2, 3, 3, '2020-07-03', 'seatbelt failure', '2021-10-25', '2021-10-26', 0),
-(3, 4, 4, '2021-06-29', 'seatbelt failure', '2021-10-25', '2021-10-26', 0),
-(4, 5, 5, '2018-10-22', 'engine spark plug defective', '2021-10-25', '2021-10-26', 1),
-(5, 1, 6, '2021-04-04', 'wrong firmware', '2021-10-25', '2021-10-26', 0),
-(6, 2, 7, '2021-10-20', 'bug in system', '2021-10-25', '2021-10-26', 0),
-(7, 5, 8, '2019-06-23', 'faulty door handle', '2021-10-25', '2021-10-26', 1),
-(8, 1, 1, '2020-02-16', 'ECU failure', '2021-10-25', '2021-10-26', 1);
+VALUES (1, 2, 2, '2021-05-03', 'airbag failure', '2021-10-25', '2021-10-26', true),
+(2, 3, 3, '2020-07-03', 'seatbelt failure', '2021-10-25', '2021-10-26', false),
+(3, 4, 4, '2021-06-29', 'seatbelt failure', '2021-10-25', '2021-10-26', false),
+(4, 5, 5, '2018-10-22', 'engine spark plug defective', '2021-10-25', '2021-10-26', true),
+(5, 1, 6, '2021-04-04', 'wrong firmware', '2021-10-25', '2021-10-26', false),
+(6, 2, 7, '2021-10-20', 'bug in system', '2021-10-25', '2021-10-26', false),
+(7, 5, 8, '2019-06-23', 'faulty door handle', '2021-10-25', '2021-10-26', true),
+(8, 1, 1, '2020-02-16', 'ECU failure', '2021-10-25', '2021-10-26', true);
 
 --
 -- Dumping data for table `instances`
