@@ -7,6 +7,7 @@ use Vanier\Api\Controllers\AboutController;
 use Vanier\Api\Controllers\ManufacturersController;
 use Vanier\Api\Controllers\ModelsController;
 use Vanier\Api\Controllers\CarsController;
+use Vanier\Api\Controllers\InstancesController;
 use Vanier\Api\Controllers\RepairsController;
 use Vanier\Api\Controllers\CustomersController;
 use Vanier\Api\Controllers\RecallsController;
@@ -45,3 +46,8 @@ $app->get('/customers', [RecallsController::class, 'handleGetCustomers']);
 $app->get('/cars', [CarsController::class, 'handleGetCars']);
 
 $app->get('/cars/{car_id}/instance', [CarsController::class, 'handleGetInstanceByCarId']);
+
+// ROUTE: GET /instances
+$app->get('/instances', [InstancesController::class, 'handleGetInstances']);
+
+$app->get('/instances/{instance_id}/repairs', [InstancesController::class, 'handleGetRepairsByInstanceId']);
