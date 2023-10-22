@@ -28,4 +28,14 @@ class CustomersModel extends BaseModel
         return $this->paginate($sql,$query_values);
     }
 
+    public function getCarByCustomerId(array $filters)
+    {
+        $query_values = [];
+        $query_values[':customer_id'] = $filters['customer_id'];
+
+        $sql = "SELECT * FROM `cars` WHERE customer_id = :customer_id";
+
+        return $this->paginate($sql, $query_values);
+    }
+
 }
