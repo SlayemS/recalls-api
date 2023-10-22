@@ -8,6 +8,8 @@ use Vanier\Api\Controllers\ManufacturersController;
 use Vanier\Api\Controllers\ModelsController;
 use Vanier\Api\Controllers\CarsController;
 use Vanier\Api\Controllers\RepairsController;
+use Vanier\Api\Controllers\CustomersController;
+use Vanier\Api\Controllers\RecallsController;
 
 // Import the app instance into this file's scope.
 global $app;

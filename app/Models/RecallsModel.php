@@ -2,9 +2,9 @@
 
 namespace Vanier\Api\Models;
 
-class CustomersModel extends BaseModel
+class RecallsModel extends BaseModel
 {
-    private string $table_name = 'customers';
+    private string $table_name = 'recalls';
     public function __construct()
     {
         parent::__construct();
