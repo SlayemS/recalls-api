@@ -349,4 +349,14 @@ class BaseModel
         $this->current_page = $current_page;
         $this->records_per_page = $records_per_page;
     }
+    
+    public function getDefaultCurrentPage()
+    {
+        return $this->current_page;
+    }
+
+    public function getDefaultRecordsPerPage()
+    {
+        return $this->records_per_page;
+    }
 }

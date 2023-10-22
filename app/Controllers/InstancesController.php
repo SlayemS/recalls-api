@@ -21,22 +21,20 @@ class InstancesController extends BaseController
     {
         $filters = $request->getQueryParams();
 
+        $page = (array_key_exists('page', $filters)) ? $filters['page'] : $this->instances_model->getDefaultCurrentPage();
+        $page_size = (array_key_exists('page_size', $filters)) ? $filters['page_size'] : $this->instances_model->getDefaultRecordsPerPage();
+        $this->instances_model->setPaginationOptions($page, $page_size);
+
         $instances = $this->instances_model->getAll($filters);
         
-        $instances_json = json_encode($instances);
-        
-        $response->getBody()->write($instances_json);
-        return $response;
+        return $this->prepareOkResponse($response, (array)$instances);
     }
 
     public function handleGetRepairsByInstanceId(Request $request, Response $response, array $uri_args)
     {
         $repairs = $this->instances_model->getRepairsByInstanceId($uri_args);
         
-        $repairs_json = json_encode($repairs);
-        
-        $response->getBody()->write($repairs_json);
-        return $response;
+        return $this->prepareOkResponse($response, (array)$repairs);
     }
 
 }

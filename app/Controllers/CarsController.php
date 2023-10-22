@@ -20,12 +20,13 @@ class CarsController extends BaseController
     {
         $filters = $request->getQueryParams();
 
+        $page = (array_key_exists('page', $filters)) ? $filters['page'] : $this->cars_model->getDefaultCurrentPage();
+        $page_size = (array_key_exists('page_size', $filters)) ? $filters['page_size'] : $this->cars_model->getDefaultRecordsPerPage();
+        $this->cars_model->setPaginationOptions($page, $page_size);
+
         $cars = $this->cars_model->getAll($filters);
         
-        $cars_json = json_encode($cars);
-        
-        $response->getBody()->write($cars_json);
-        return $response;
+        return $this->prepareOkResponse($response, (array)$cars);
     }
 
 
@@ -33,10 +34,7 @@ class CarsController extends BaseController
     {
         $instance = $this->cars_model->getInstanceByCarId($uri_args);
         
-        $instance_json = json_encode($instance);
-        
-        $response->getBody()->write($instance_json);
-        return $response;
+        return $this->prepareOkResponse($response, (array)$instance);
     }
 
 }
