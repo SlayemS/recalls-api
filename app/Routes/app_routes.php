@@ -6,6 +6,7 @@ use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\AboutController;
 use Vanier\Api\Controllers\ManufacturersController;
 use Vanier\Api\Controllers\ModelsController;
+use Vanier\Api\Controllers\CarsController;
 use Vanier\Api\Controllers\RepairsController;
 
 // Import the app instance into this file's scope.
@@ -31,3 +32,11 @@ $app->get('/models', [ModelsController::class, 'handleGetModels']);
 
 // ROUTE: GET /repairs
 $app->get('/repairs', [RepairsController::class, 'handleGetRepairs']);
+
+// ROUTE: GET /recalls
+$app->get('/recalls', [RecallsController::class, 'fetchAll']);
+
+// ROUTE: GET /cars
+$app->get('/cars', [CarsController::class, 'handleGetCars']);
+
+$app->get('/cars/{car_id}/instance', [CarsController::class, 'handleGetInstanceByCarId']);
