@@ -20,6 +20,10 @@ class RecallsModel extends BaseModel
             $sql .= "AND subject LIKE CONCAT('%', :subject, '%')";    
             $query_values[':subject'] = $filters['subject'];
         }
+        if(isset($filters['issue_date'])){
+            $sql .= "AND issue_date LIKE CONCAT('%', :issue_date, '%')";    
+            $query_values[':issue_date'] = $filters['issue_date'];
+        }
         if(isset($filters['component'])){
             $sql .= "AND component LIKE CONCAT('%', :component, '%')";    
             $query_values[':component'] = $filters['component'];
