@@ -95,6 +95,20 @@ CREATE TABLE `instances` (
   `job_done` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `instances`
+--
+
+INSERT INTO instances (recall_id, car_id, notification_date, instances_note, bring_in_date, expected_leave, job_done)
+VALUES (1, 1, '2021-10-22', 'ECU failure', '2021-10-25', '2021-10-26', 0),
+(2, 2, '2021-10-22', 'airbag failure', '2021-10-25', '2021-10-26', 0),
+(3, 3, '2021-10-22', 'seatbelt failure', '2021-10-25', '2021-10-26', 0),
+(4, 4, '2021-10-22', 'seatbelt failure', '2021-10-25', '2021-10-26', 0),
+(5, 5, '2021-10-22', 'engine spark plug defective', '2021-10-25', '2021-10-26', 0),
+(6, 6, '2021-10-22', 'wrong firmware', '2021-10-25', '2021-10-26', 0),
+(7, 7, '2021-10-22', 'bug in system', '2021-10-25', '2021-10-26', 0),
+(8, 8, '2021-10-22', 'faulty door handle', '2021-10-25', '2021-10-26', 0);
+
 -- --------------------------------------------------------
 
 --
