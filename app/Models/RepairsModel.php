@@ -24,8 +24,13 @@ class RepairsModel extends BaseModel
             $sql .= "AND year LIKE CONCAT(:year, '%')";    
             $query_values[':year'] = $filters['year'];
         }
-        // create filters for repairs table
         
+        // create filters for repairs table
+        if(isset($filters['make'])){
+            $sql .= "AND make LIKE CONCAT('%', :make, '%')";    
+            $query_values[':make'] = $filters['make'];
+        }
+
 
         return $this->paginate($sql,$query_values);
     }

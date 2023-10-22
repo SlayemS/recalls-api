@@ -20,23 +20,6 @@ class RepairsController extends BaseController
         $this->repairs_model = new RepairsModel();
     }
 
-    public function handleGetFilms(Request $request, Response $response, array $uri_args)
-    {
-        $filters = $request->getQueryParams();
-
-        // $page = $filters['page'];
-        // $page_size = $filters['page_size'];
-        $page = (array_key_exists('page', $filters)) ? $filters['page'] : $this->films_model->getDefaultCurrentPage();
-        $page_size = (array_key_exists('page_size', $filters)) ? $filters['page_size'] : $this->films_model->getDefaultRecordsPerPage();
-
-        $this->films_model->setPaginationOptions($page, $page_size);
-
-        $films = $this->films_model->getAll($filters);
-
-        return $this->prepareOkResponse($response, (array)$films);
-    }
-
-    // take the above code and make it work for repairs
     public function handleGetRepairs(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();

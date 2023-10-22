@@ -18,13 +18,6 @@ global $app;
 // ROUTE: GET /
 $app->get('/', [AboutController::class, 'handleAboutApi']); 
 
-$app->get('/manufacturers', [ManufacturersController::class, 'handleGetManufacturers']); 
-
-$app->get('/models', [ModelsController::class, 'handleGetModels']);
-
-// ROUTE: GET /repairs
-$app->get('/repairs', [RepairsController::class, 'handleGetRepairs']);
-
 // ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
 
@@ -32,5 +25,9 @@ $app->get('/hello', function (Request $request, Response $response, $args) {
     return $response;
 });
 
-// ROUTE: GET /recalls
-$app->get('/recalls', [RecallsController::class, 'fetchAll']);
+$app->get('/manufacturers', [ManufacturersController::class, 'handleGetManufacturers']); 
+
+$app->get('/models', [ModelsController::class, 'handleGetModels']);
+
+// ROUTE: GET /repairs
+$app->get('/repairs', [RepairsController::class, 'handleGetRepairs']);
