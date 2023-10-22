@@ -34,7 +34,10 @@ $app->get('/models', [ModelsController::class, 'handleGetModels']);
 $app->get('/repairs', [RepairsController::class, 'handleGetRepairs']);
 
 // ROUTE: GET /recalls
-$app->get('/recalls', [RecallsController::class, 'fetchAll']);
+$app->get('/recalls', [RecallsController::class, 'handleGetRecalls']);
+
+// ROUTE: GET /customers
+$app->get('/customers', [RecallsController::class, 'handleGetCustomers']);
 
 // ROUTE: GET /cars
 $app->get('/cars', [CarsController::class, 'handleGetCars']);

@@ -4,8 +4,7 @@ namespace Vanier\Api\Models;
 
 class CustomersModel extends BaseModel
 {
-    private string $table_name = 'customers
-    ';
+    private string $table_name = 'customers';
     public function __construct()
     {
         parent::__construct();

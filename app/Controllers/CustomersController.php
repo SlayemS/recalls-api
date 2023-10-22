@@ -12,7 +12,7 @@ class CustomersController extends BaseController
     private $customers_model = null;
 
     public function __construct(){
-        $this->customers_model = new ManufacturersModel();
+        $this->customers_model = new CustomersModel();
     }
 
 
