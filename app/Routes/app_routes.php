@@ -40,7 +40,7 @@ $app->get('/repairs', [RepairsController::class, 'handleGetRepairs']);
 $app->get('/recalls', [RecallsController::class, 'handleGetRecalls']);
 
 // ROUTE: GET /customers
-$app->get('/customers', [RecallsController::class, 'handleGetCustomers']);
+$app->get('/customers', [CustomersController::class, 'handleGetCustomers']);
 
 // ROUTE: GET /cars
 $app->get('/cars', [CarsController::class, 'handleGetCars']);
