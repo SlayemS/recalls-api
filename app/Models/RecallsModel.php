@@ -17,7 +17,7 @@ class RecallsModel extends BaseModel
         $sql = "SELECT * FROM $this->table_name WHERE 1 ";
 
         if(isset($filters['subject'])){
-            $sql .= "AND subject LIKE CONCAT('%', :subject, '%')";    
+            $sql .= "AND `subject` LIKE CONCAT('%', :subject, '%')";    
             $query_values[':subject'] = $filters['subject'];
         }
         if(isset($filters['issue_date'])){

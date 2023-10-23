@@ -16,12 +16,18 @@ class RepairsModel extends BaseModel
         $query_values = [];
         $sql = "SELECT * FROM $this->table_name WHERE 1 ";
 
-        // filters for repairs
-        if(isset($filters['make'])){
-            $sql .= "AND make LIKE CONCAT('%', :make, '%')";    
-            $query_values[':make'] = $filters['make'];
+        if (isset($filters['status'])) {
+            $sql .= " AND `status` LIKE CONCAT('%', :status, '%') ";
+            $query_values[':status'] = $filters['status'];
         }
-
+        if (isset($filters['max_cost'])) {
+            $sql .= " AND cost < :max_cost ";
+            $query_values[':max_cost'] = $filters['max_cost'];
+        }
+        if (isset($filters['min_cost'])) {
+            $sql .= " AND cost > :min_cost ";
+            $query_values[':min_cost'] = $filters['min_cost'];
+        }
 
         return $this->paginate($sql,$query_values);
     }

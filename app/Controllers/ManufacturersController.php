@@ -19,11 +19,13 @@ class ManufacturersController extends BaseController
     public function handleGetManufacturers(Request $request, Response $response, array $uri_args)
     {               
         $filters = $request->getQueryParams();
-        $manufacturers = $this->manufacturers_model->getAll($filters);
+        
 
         $page = (array_key_exists('page', $filters)) ? $filters['page'] : $this->manufacturers_model->getDefaultCurrentPage();
         $page_size = (array_key_exists('page_size', $filters)) ? $filters['page_size'] : $this->manufacturers_model->getDefaultRecordsPerPage();
         $this->manufacturers_model->setPaginationOptions($page, $page_size);
+        
+        $manufacturers = $this->manufacturers_model->getAll($filters);
 
         return $this->prepareOkResponse($response, (array)$manufacturers);
     }
