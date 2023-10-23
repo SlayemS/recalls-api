@@ -56,15 +56,15 @@ INSERT INTO `customers` (`customer_id`, `first_name`, `last_name`, `email`, `pho
 -- Dumping data for table `cars`
 --
 
-INSERT INTO `cars` (`car_id`, `customer_id`, `model`, `purchase_date`, `dealership`, `insurance_nb`, `mileage`, `color`)
+INSERT INTO `cars` (`car_id`, `customer_id`, `model_id`, `purchase_date`, `dealership`, `insurance_nb`, `mileage`, `color`)
 VALUES (1, 1, 1, '2021-10-22', 'BMW', '123456789', 130000, 'black'),
 (2, 1, 2, '2023-10-22', 'Audi', '123456789', 80000, 'matte blue'),
 (3, 1, 3, '2021-01-22', 'Volkswagen', '123456789', 130000, 'black'),
 (4, 2, 4, '2015-09-12', 'Toyota', '123456789', 130000, 'yellow'),
 (5, 5, 5, '2016-02-16', 'Honda', '123456789', 2000, 'black'),
-(6, 2, 6, '2017-06-15', 'Ford', '123456789', 13000, 'red'),
-(7, 4, 7, '2012-11-22', 'Chevrolet', '123456789', 46000, 'red'),
-(8, 3, 8, '2011-10-22', 'Nissan', '123456789', 204000, 'green');
+(6, 2, 2, '2017-06-15', 'Ford', '123456789', 13000, 'red'),
+(7, 4, 1, '2012-11-22', 'Chevrolet', '123456789', 46000, 'red'),
+(8, 3, 4, '2011-10-22', 'Nissan', '123456789', 204000, 'green');
 
 --
 -- Dumping data for table `instances`
