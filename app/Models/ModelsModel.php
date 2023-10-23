@@ -53,4 +53,14 @@ class ModelsModel extends BaseModel
 
         return $this->paginate($sql, $query_values);
     }
+
+    public function getRecallsByModelId(array $filters) {
+        $query_values = [];
+        $query_values[':model_id'] = $filters['model_id'];
+
+        $sql = "SELECT * FROM `recalls` WHERE model_id = :model_id";
+
+        return $this->paginate($sql, $query_values);
+    }
+
 }

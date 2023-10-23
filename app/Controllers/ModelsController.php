@@ -35,4 +35,11 @@ class ModelsController extends BaseController
         
         return $this->prepareOkResponse($response, (array)$repairs);
     }
+
+    public function handleGetRecallsByModelId(Request $request, Response $response, array $uri_args)
+    {
+        $repairs = $this->models_model->getRecallsByModelId($uri_args);
+        
+        return $this->prepareOkResponse($response, (array)$repairs);
+    }
 }
