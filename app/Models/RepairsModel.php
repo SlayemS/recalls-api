@@ -17,7 +17,7 @@ class RepairsModel extends BaseModel
         $sql = "SELECT * FROM $this->table_name WHERE 1 ";
 
         if (isset($filters['status'])) {
-            $sql .= " AND `status` LIKE CONCAT('%', :`status`, '%') ";
+            $sql .= " AND `status` LIKE CONCAT('%', :status, '%') ";
             $query_values[':status'] = $filters['status'];
         }
         if (isset($filters['max_cost'])) {
