@@ -31,4 +31,14 @@ class RecallsModel extends BaseModel
         return $this->paginate($sql,$query_values);
     }
 
+    public function getInstanceByRecallId(array $filters)
+    {
+        $query_values = [];
+        $query_values[':recall_id'] = $filters['recall_id'];
+
+        $sql = "SELECT * FROM `instances` WHERE recall_id = :recall_id";
+
+        return $this->paginate($sql, $query_values);
+    }
+
 }
