@@ -33,7 +33,7 @@ USE recalls_db;
 CREATE TABLE `cars` (
   `car_id` int(11) PRIMARY KEY AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
-  `model` int(11) NOT NULL,
+  `model_id` int(11) NOT NULL,
   `purchase_date` date NOT NULL,
   `dealership` varchar(50) NOT NULL,
   `insurance_nb` varchar(18) NOT NULL,
@@ -146,7 +146,8 @@ CREATE TABLE `repairs` (
 -- Indexes for table `cars`
 --
 ALTER TABLE `cars`
-  ADD KEY `cars_customer_id` (`customer_id`);
+  ADD KEY `cars_customer_id` (`customer_id`),
+  ADD KEY `cars_model_id` (`model_id`);
 
 --
 -- Indexes for table `instances`
@@ -175,7 +176,8 @@ ALTER TABLE `recalls`
 -- Constraints for table `cars`
 --
 ALTER TABLE `cars`
-  ADD CONSTRAINT `cars_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`);
+  ADD CONSTRAINT `cars_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
+  ADD CONSTRAINT `cars_model_id` FOREIGN KEY (`model_id`) REFERENCES `models` (`model_id`);
 
 --
 -- Constraints for table `instances`
