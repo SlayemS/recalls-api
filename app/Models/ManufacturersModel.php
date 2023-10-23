@@ -31,4 +31,13 @@ class ManufacturersModel extends BaseModel
         return $this->paginate($sql,$query_values);
     }
 
+    public function getModelsByManufacturerId(array $filters) {
+        $query_values = [];
+        $query_values[':manufacturer_id'] = $filters['manufacturer_id'];
+
+        $sql = "SELECT * FROM `models` WHERE manufacturer_id = :manufacturer_id";
+
+        return $this->paginate($sql, $query_values);
+    }
+
 }

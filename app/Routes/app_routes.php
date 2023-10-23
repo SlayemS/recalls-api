@@ -29,9 +29,15 @@ $app->get('/hello', function (Request $request, Response $response, $args) {
     return $response;
 });
 
+// ROUTE: GET /manufacturers
 $app->get('/manufacturers', [ManufacturersController::class, 'handleGetManufacturers']); 
+// ROUTE: GET /models by manufacturer_id
+$app->get('/manufacturers/{manufacturer_id}/models', [ManufacturersController::class, 'handleGetModelsByManufacturerId']);
 
+// ROUTE: GET /models
 $app->get('/models', [ModelsController::class, 'handleGetModels']);
+// ROUTE: GET /models by manufacturer_id
+$app->get('/models/{model_id}/cars', [ModelsController::class, 'handleGetCarsByModelId']);
 
 // ROUTE: GET /repairs
 $app->get('/repairs', [RepairsController::class, 'handleGetRepairs']);

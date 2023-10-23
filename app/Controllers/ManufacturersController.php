@@ -20,6 +20,18 @@ class ManufacturersController extends BaseController
     {               
         $filters = $request->getQueryParams();
         $manufacturers = $this->manufacturers_model->getAll($filters);
+
+        $page = (array_key_exists('page', $filters)) ? $filters['page'] : $this->manufacturers_model->getDefaultCurrentPage();
+        $page_size = (array_key_exists('page_size', $filters)) ? $filters['page_size'] : $this->manufacturers_model->getDefaultRecordsPerPage();
+        $this->manufacturers_model->setPaginationOptions($page, $page_size);
+
         return $this->prepareOkResponse($response, (array)$manufacturers);
+    }
+
+    public function handleGetModelsByManufacturerId(Request $request, Response $response, array $uri_args)
+    {
+        $repairs = $this->manufacturers_model->getModelsByManufacturerId($uri_args);
+        
+        return $this->prepareOkResponse($response, (array)$repairs);
     }
 }

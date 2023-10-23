@@ -19,6 +19,18 @@ class ModelsController extends BaseController
     {               
         $filters = $request->getQueryParams();
         $models = $this->models_model->getAll($filters);
+
+        $page = (array_key_exists('page', $filters)) ? $filters['page'] : $this->models_model->getDefaultCurrentPage();
+        $page_size = (array_key_exists('page_size', $filters)) ? $filters['page_size'] : $this->models_model->getDefaultRecordsPerPage();
+        $this->models_model->setPaginationOptions($page, $page_size);
+
         return $this->prepareOkResponse($response, (array)$models);
+    }
+
+    public function handleGetCarsByModelId(Request $request, Response $response, array $uri_args)
+    {
+        $repairs = $this->models_model->getCarsByModelId($uri_args);
+        
+        return $this->prepareOkResponse($response, (array)$repairs);
     }
 }

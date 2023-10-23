@@ -43,4 +43,14 @@ class ModelsModel extends BaseModel
         
         return $this->paginate($sql,$query_values);
     }
+
+    // Need to fix db first
+    public function getCarsByModelId(array $filters) {
+        $query_values = [];
+        $query_values[':model_id'] = $filters['model_id'];
+
+        $sql = "SELECT * FROM `cars` WHERE model_id = :model_id";
+
+        return $this->paginate($sql, $query_values);
+    }
 }
