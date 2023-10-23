@@ -133,9 +133,9 @@ CREATE TABLE `repairs` (
   `repair_id` int(11) PRIMARY KEY AUTO_INCREMENT,
   `instance_id` int(11) NOT NULL,
   `repair_date` date NOT NULL,
-  `repair_cost` decimal(10,0) NOT NULL,
-  `repair_status` varchar(20) NOT NULL,
-  `repair_estimate_time` varchar(7) NOT NULL
+  `cost` decimal(10,0) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `estimate_time` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

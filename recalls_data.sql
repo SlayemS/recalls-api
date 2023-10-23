@@ -84,7 +84,7 @@ VALUES (1, 2, 2, '2021-05-03', 'airbag failure', '2021-10-25', '2021-10-26', tru
 -- Dumping data for table `instances`
 --
 
-INSERT INTO `repairs` (`repair_id`, `instance_id`, `repair_date`, `repair_cost`, `repair_status`, `repair_estimate_time`)
+INSERT INTO `repairs` (`repair_id`, `instance_id`, `repair_date`, `cost`, `status`, `estimate_time`)
 VALUES (1, 1, '2023-10-22', 150.00, 'Completed', '1 day'),
 (2, 2, '2021-10-23', 250.00, 'In Progress', '2 days'),
 (3, 3, '2022-4-24', 400.00, 'Pending', '3 days'),
