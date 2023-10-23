@@ -18,11 +18,13 @@ class ModelsController extends BaseController
     public function handleGetModels(Request $request, Response $response, array $uri_args)
     {               
         $filters = $request->getQueryParams();
-        $models = $this->models_model->getAll($filters);
+        
 
         $page = (array_key_exists('page', $filters)) ? $filters['page'] : $this->models_model->getDefaultCurrentPage();
         $page_size = (array_key_exists('page_size', $filters)) ? $filters['page_size'] : $this->models_model->getDefaultRecordsPerPage();
         $this->models_model->setPaginationOptions($page, $page_size);
+        
+        $models = $this->models_model->getAll($filters);
 
         return $this->prepareOkResponse($response, (array)$models);
     }
