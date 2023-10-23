@@ -32,6 +32,13 @@ class CustomersController extends BaseController
     {
         $car = $this->customers_model->getCarByCustomerId($uri_args);
 
+        $filters = $request->getQueryParams();
+
+        $page = (array_key_exists('page', $filters)) ? $filters['page'] : $this->customers_model->getDefaultCurrentPage();
+        $page_size = (array_key_exists('page_size', $filters)) ? $filters['page_size'] : $this->customers_model->getDefaultRecordsPerPage();
+        $this->customers_model->setPaginationOptions($page, $page_size);
+        $car = $this->customers_model->getAll($filters);
+
         return $this->prepareOkResponse($response, (array)$car);
     }
 }
