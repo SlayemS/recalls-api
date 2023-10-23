@@ -52,12 +52,12 @@ $app->get('/recalls/{recall_id}/instance', [RecallsController::class, 'handleGet
 // ROUTE: GET /customers
 $app->get('/customers', [CustomersController::class, 'handleGetCustomers']);
 
-$app->get('/customers/{customer_id}/car', [CustomersController::class, 'handleGetCarByCustomerId']);
+$app->get('/customers/{customer_id}/cars', [CustomersController::class, 'handleGetCarByCustomerId']);
 
 // ROUTE: GET /cars
 $app->get('/cars', [CarsController::class, 'handleGetCars']);
 
-$app->get('/cars/{car_id}/instance', [CarsController::class, 'handleGetInstanceByCarId']);
+$app->get('/cars/{car_id}/instances', [CarsController::class, 'handleGetInstanceByCarId']);
 
 // ROUTE: GET /instances
 $app->get('/instances', [InstancesController::class, 'handleGetInstances']);
