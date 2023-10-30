@@ -40,4 +40,8 @@ class ManufacturersModel extends BaseModel
         return $this->paginate($sql, $query_values);
     }
 
+    public function createManufacturer(array $newManufacturer){
+        $this->insert($this->table_name,$newManufacturer);
+    }
+
 }

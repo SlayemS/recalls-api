@@ -2,6 +2,7 @@
 
 namespace Vanier\Api\Controllers;
 
+use Fig\Http\Message\StatusCodeInterface as HttpCodes;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Models\ManufacturersModel;
@@ -10,6 +11,10 @@ class ManufacturersController extends BaseController
 {
 
     private $manufacturers_model = null;
+    
+    private array $rules = array(
+        // Rules for validating films' properties
+    );
 
     public function __construct(){
         $this->manufacturers_model = new ManufacturersModel();
@@ -35,5 +40,32 @@ class ManufacturersController extends BaseController
         $repairs = $this->manufacturers_model->getModelsByManufacturerId($uri_args);
         
         return $this->prepareOkResponse($response, (array)$repairs);
+    }
+
+    public function handleCreateManufacturers(Request $request, Response $response){
+        $data = $request->getParsedBody();
+
+        if(empty($data) || !isset($data)){
+            // throw new HttpBadRequestException($request, "Couldn't proccess the request. The list of manufacturers is empty");
+        }
+
+
+        foreach($data as $key => $manufacturer){
+            if($this->isValidData($manufacturer, $this->rules)){
+                $this->manufacturers_model->createManufacturer($manufacturer);
+            }else{
+                //? Else keep track of the encountered errors. We can maintain an array
+                // We can maintain an array.
+                //TODO: add $validation_response to the list of errors.
+            }
+        }
+
+        $response_data = array(
+            "code" => HttpCodes::STATUS_CREATED,
+            "message" => "The manufacturer has been successfully created"
+        );
+
+        return $this->prepareOkResponse($response, $response_data, HttpCodes::STATUS_CREATED);  
+
     }
 }

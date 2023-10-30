@@ -31,6 +31,8 @@ $app->get('/hello', function (Request $request, Response $response, $args) {
 
 // ROUTE: GET /manufacturers
 $app->get('/manufacturers', [ManufacturersController::class, 'handleGetManufacturers']); 
+// ROUTE: POST /manufacturers
+$app->post('/manufacturers', [ManufacturersController::class, 'handleCreateManufacturers']); 
 // ROUTE: GET /models by manufacturer_id
 $app->get('/manufacturers/{manufacturer_id}/models', [ManufacturersController::class, 'handleGetModelsByManufacturerId']);
 
