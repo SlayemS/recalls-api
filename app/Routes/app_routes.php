@@ -38,6 +38,8 @@ $app->get('/manufacturers/{manufacturer_id}/models', [ManufacturersController::c
 
 // ROUTE: GET /models
 $app->get('/models', [ModelsController::class, 'handleGetModels']);
+// ROUTE: POST /models
+$app->post('/models', [ModelsController::class, 'handleCreateModels']);
 // ROUTE: GET /cars by model_id
 $app->get('/models/{model_id}/cars', [ModelsController::class, 'handleGetCarsByModelId']);
 // ROUTE: GET /recalls by model_id

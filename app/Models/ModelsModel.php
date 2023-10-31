@@ -63,4 +63,8 @@ class ModelsModel extends BaseModel
         return $this->paginate($sql, $query_values);
     }
 
+    public function createModel(array $newModel){
+        $this->insert($this->table_name,$newModel);
+    }
+
 }
