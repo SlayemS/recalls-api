@@ -24,6 +24,10 @@ class CustomersModel extends BaseModel
             $sql .= "AND last_name LIKE CONCAT('%', :last_name, '%')";    
             $query_values[':last_name'] = $filters['last_name'];
         }
+        if(isset($filters['customer_id'])){
+            $sql .= "AND customer_id LIKE CONCAT('%', :customer_id, '%')";    
+            $query_values[':customer_id'] = $filters['customer_id'];
+        }
         return $this->paginate($sql,$query_values);
     }
 

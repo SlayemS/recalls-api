@@ -31,6 +31,10 @@ class CarsModel extends BaseModel
             $sql .= " AND mileage > :min_mileage ";
             $query_values[':min_mileage'] = $filters['min_mileage'];
         }
+        if(isset($filters['customer_id'])){
+            $sql .= "AND customer_id LIKE CONCAT('%', :customer_id, '%')";    
+            $query_values[':last_name'] = $filters['customer_id'];
+        }
         return $this->paginate($sql, $query_values );
     }
 
