@@ -33,7 +33,7 @@ class CarsModel extends BaseModel
         }
         if(isset($filters['customer_id'])){
             $sql .= "AND customer_id LIKE CONCAT('%', :customer_id, '%')";    
-            $query_values[':last_name'] = $filters['customer_id'];
+            $query_values[':customer_id'] = $filters['customer_id'];
         }
         return $this->paginate($sql, $query_values );
     }
