@@ -2,6 +2,7 @@
 use Slim\Factory\AppFactory;
 
 require __DIR__ . '/vendor/autoload.php';
+use Vanier\Api\Middleware\ContentNegotiationMiddleware;
 
  // Include the file that contains the application's global configuration settings,
  // database credentials, etc.
@@ -13,6 +14,8 @@ $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 
 $app->addRoutingMiddleware();
+
+$app->addMiddleware(new ContentNegotiationMiddleware());
 // NOTE: the error handling middleware MUST be added last.
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 $errorMiddleware->getDefaultErrorHandler()->forceContentType(APP_MEDIA_TYPE_JSON);
