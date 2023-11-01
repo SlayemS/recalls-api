@@ -23,7 +23,7 @@ class ContentNegotiationMiddleware implements MiddlewareInterface
        
         $headerValueArray = $request->getHeaderLine('Accept');
 
-        if($headerValueArray == 'application/json'){
+        if($headerValueArray == 'application/json' || $headerValueArray == '*/*') {
             $response = new \Slim\Psr7\Response();
             $response = $handler->handle($request);
             return $response;
