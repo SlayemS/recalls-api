@@ -44,4 +44,7 @@ class ManufacturersModel extends BaseModel
         $this->insert($this->table_name,$newManufacturer);
     }
 
+    public function updateManufacturer(array $data, $where){
+        $this->update($this->table_name,$data, $where);
+    }
 }

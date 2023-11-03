@@ -3,6 +3,7 @@
 namespace Vanier\Api\Controllers;
 
 use Fig\Http\Message\StatusCodeInterface as HttpCodes;
+use Slim\Exception\HttpBadRequestException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Models\ManufacturersModel;
@@ -67,5 +68,41 @@ class ManufacturersController extends BaseController
 
         return $this->prepareOkResponse($response, $response_data, HttpCodes::STATUS_CREATED);  
 
+    }
+
+    public function handleUpdateManufacturers(Request $request, Response $response,){
+        $update_data = $request->getParsedBody();
+
+        $whereArr = [
+            $id = [
+                "manufacturer_id" => 1
+            ]
+        ];
+
+        if(empty($update_data || !isset($update_data))){
+            throw new HttpBadRequestException($request, "Couldn't proccess the request. The update values are empty");
+        }
+
+        foreach($update_data as $key => $data){
+
+        }
+        
+        foreach($whereArr as $key => $where){
+
+        }
+
+
+        if($this->isValidData($data, $this->rules)){
+            $this->manufacturers_model->updateManufacturer($data,$where);
+            
+            $response_data = array(
+                "code" => HttpCodes::STATUS_CREATED,
+                "message" => "The list of manufacturer has been successfully updated"
+            );
+        }
+
+        
+
+        return $this->prepareOkResponse($response,$response_data, HttpCodes::STATUS_CREATED);
     }
 }
