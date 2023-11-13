@@ -100,9 +100,29 @@ class ManufacturersController extends BaseController
                 "message" => "The list of manufacturer has been successfully updated"
             );
         }
-
         
 
         return $this->prepareOkResponse($response,$response_data, HttpCodes::STATUS_CREATED);
+    }
+
+    public function handleDeleteManufacturers(Request $request, Response $response)
+    {
+        $manufacturers_id = $request->getParsedBody();
+
+        foreach($manufacturers_id as $key => $where){
+
+        }    
+        if($this->isValidData($where, $this->rules)){
+            $this->manufacturers_model->deleteManufacturer($where);
+        }else{
+                //TODO: add $validation_response to the list of errors.
+        }
+        $response_data = array(
+            "code" => HttpCodes::STATUS_CREATED,
+            "message" => "Deleted!"
+        );
+
+        return $this->prepareOkResponse($response,$response_data, HttpCodes::STATUS_CREATED);
+
     }
 }

@@ -37,6 +37,8 @@ $app->post('/manufacturers', [ManufacturersController::class, 'handleCreateManuf
 $app->put('/manufacturers', [ManufacturersController::class, 'handleUpdateManufacturers']); 
 // ROUTE: GET /models by manufacturer_id
 $app->get('/manufacturers/{manufacturer_id}/models', [ManufacturersController::class, 'handleGetModelsByManufacturerId']);
+// ROUTE: DELETE /manufacturers
+$app->delete('/manufacturers', [ManufacturersController::class,'handleDeleteManufacturers']);
 
 // ROUTE: GET /models
 $app->get('/models', [ModelsController::class, 'handleGetModels']);
@@ -46,6 +48,8 @@ $app->post('/models', [ModelsController::class, 'handleCreateModels']);
 $app->get('/models/{model_id}/cars', [ModelsController::class, 'handleGetCarsByModelId']);
 // ROUTE: GET /recalls by model_id
 $app->get('/models/{model_id}/recalls', [ModelsController::class, 'handleGetRecallsByModelId']);
+// ROUTE: DELETE /models
+$app->delete('/models', [ModelsController::class,'handleDeleteModels']);
 
 // ROUTE: GET /repairs
 $app->get('/repairs', [RepairsController::class, 'handleGetRepairs']);

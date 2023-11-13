@@ -47,4 +47,8 @@ class ManufacturersModel extends BaseModel
     public function updateManufacturer(array $data, $where){
         $this->update($this->table_name,$data, $where);
     }
+
+    public function deleteManufacturer($manufacturer_id){
+        $this->delete($this->table_name,$manufacturer_id);
+    }
 }

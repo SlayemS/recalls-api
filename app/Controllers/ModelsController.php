@@ -3,6 +3,7 @@
 namespace Vanier\Api\Controllers;
 
 use Fig\Http\Message\StatusCodeInterface as HttpCodes;
+use Slim\Exception\HttpBadRequestException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Models\ModelsModel;
@@ -73,5 +74,61 @@ class ModelsController extends BaseController
 
         return $this->prepareOkResponse($response, $response_data, HttpCodes::STATUS_CREATED);  
 
+    }
+
+    public function handleDeleteModels(Request $request, Response $response)
+    {
+        $models_id = $request->getParsedBody();
+
+        foreach($models_id as $key => $where){
+
+        }    
+        if($this->isValidData($where, $this->rules)){
+            $this->models_model->deleteModel($where);
+        }else{
+                //TODO: add $validation_response to the list of errors.
+        }
+        $response_data = array(
+            "code" => HttpCodes::STATUS_CREATED,
+            "message" => "Deleted!"
+        );
+
+        return $this->prepareOkResponse($response,$response_data, HttpCodes::STATUS_CREATED);
+
+    }
+
+    public function handleUpdateModels(Request $request, Response $response,){
+        $update_data = $request->getParsedBody();
+
+        $whereArr = [
+            $id = [
+                "model_id" => 1
+            ]
+        ];
+
+        if(empty($update_data || !isset($update_data))){
+            throw new HttpBadRequestException($request, "Couldn't proccess the request. The update values are empty");
+        }
+
+        foreach($update_data as $key => $data){
+
+        }
+        
+        foreach($whereArr as $key => $where){
+
+        }
+
+
+        if($this->isValidData($data, $this->rules)){
+            $this->models_model->updateModel($data,$where);
+            
+            $response_data = array(
+                "code" => HttpCodes::STATUS_CREATED,
+                "message" => "The list of model has been successfully updated"
+            );
+        }
+        
+
+        return $this->prepareOkResponse($response,$response_data, HttpCodes::STATUS_CREATED);
     }
 }

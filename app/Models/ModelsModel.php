@@ -67,4 +67,11 @@ class ModelsModel extends BaseModel
         $this->insert($this->table_name,$newModel);
     }
 
+    public function deleteModel($model_id){
+        $this->delete($this->table_name,$model_id);
+    }
+
+    public function updateModel($model_data,$where){
+        $this->update($this->table_name,$model_data,$where);
+    }
 }
