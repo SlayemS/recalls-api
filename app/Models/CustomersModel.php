@@ -40,5 +40,15 @@ class CustomersModel extends BaseModel
 
         return $this->paginate($sql, $query_values);
     }
+    
+    public function checkIfCustomerExists(int $customer_id) {
+        $sql = "SELECT * FROM $this->table_name WHERE customer_id = :customer_id";
+
+        return $this->fetchSingle($sql, [':customer_id' => $customer_id]);
+    }
+
+    public function deleteCustomer(int $customer_id) {
+        $this->delete($this->table_name, ['customer_id' => $customer_id]);
+    }
 
 }
