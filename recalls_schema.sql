@@ -138,6 +138,33 @@ CREATE TABLE `repairs` (
   `estimate_time` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+DROP TABLE IF EXISTS `ws_users`;
+CREATE TABLE IF NOT EXISTS `ws_users` (
+  `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `email` varchar(150) NOT NULL UNIQUE,
+  `password` varchar(255) NOT NULL,
+  `role` varchar(10) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Table structure for table `ws_log`
+--
+
+DROP TABLE IF EXISTS `ws_log`;
+CREATE TABLE IF NOT EXISTS `ws_log` (
+  `log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `email` varchar(150) NOT NULL,
+  `user_action` varchar(255) NOT NULL,
+  `logged_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `user_id` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 --
 -- Indexes for dumped tables
 --
