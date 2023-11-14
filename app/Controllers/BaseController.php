@@ -41,7 +41,7 @@ class BaseController
                 'required',
                 'integer',
                 ['min', 1],
-                ['max', 11]
+                ['max', 100000000]
             ],
             'description' => [
                 'required',
