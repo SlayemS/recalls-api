@@ -83,4 +83,10 @@ class ModelsModel extends BaseModel
     public function updateModel($model_data,$where){
         $this->update($this->table_name,$model_data,$where);
     }
+
+    public function checkIfModelExists(int $model_id) {
+        $sql = "SELECT * FROM $this->table_name WHERE model_id = :model_id";
+
+        return $this->fetchSingle($sql, [':model_id' => $model_id]);
+    }
 }
