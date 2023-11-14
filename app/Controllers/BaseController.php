@@ -107,6 +107,20 @@ class BaseController
         return $this->isValidData($data, $rules);
     }
 
+    protected function isValidUpdateManufacturer(array $data) : mixed {
+        $rules = array(
+            'manufacturer_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            
+        );
+
+        return $this->isValidData($data, $rules);
+    }
+
     protected function isValidData(array $data, array $rules) : mixed {
         $validator = new Validator($data, [], 'en');
         $validator->mapFieldsRules($rules);

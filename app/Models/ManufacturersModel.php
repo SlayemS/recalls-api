@@ -44,8 +44,14 @@ class ManufacturersModel extends BaseModel
         $this->insert($this->table_name,$newManufacturer);
     }
 
-    public function updateManufacturer(array $data, $where){
-        $this->update($this->table_name,$data, $where);
+    public function ifManufacturerExists(int $manufacturer_id) {
+        $sql = "SELECT * FROM $this->table_name WHERE manufacturer_id = :manufacturer_id";
+
+        return $this->fetchSingle($sql, [':manufacturer_id' => $manufacturer_id]);
+    }
+
+    public function updateManufacturer(array $data, array $manufacturer_id){
+        $this->update($this->table_name,$data, ['manufacturer_id' => $manufacturer_id]);
     }
 
     public function deleteManufacturer($manufacturer_id){

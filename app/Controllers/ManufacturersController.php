@@ -73,35 +73,52 @@ class ManufacturersController extends BaseController
     public function handleUpdateManufacturers(Request $request, Response $response,){
         $update_data = $request->getParsedBody();
 
-        $whereArr = [
-            $id = [
-                "manufacturer_id" => 1
-            ]
-        ];
-
         if(empty($update_data || !isset($update_data))){
             throw new HttpBadRequestException($request, "Couldn't proccess the request. The update values are empty");
         }
 
         foreach($update_data as $key => $data){
-
-        }
-        
-        foreach($whereArr as $key => $where){
-
-        }
-
-
-        if($this->isValidData($data, $this->rules)){
-            $this->manufacturers_model->updateManufacturer($data,$where);
+            $manufacturer_id = $data["manufacturer_id"];
             
-            $response_data = array(
-                "code" => HttpCodes::STATUS_CREATED,
-                "message" => "The list of manufacturer has been successfully updated"
-            );
-        }
-        
+            $id_exists = !empty($this->manufacturers_model->ifManufacturerExists($manufacturer_id));
+            
+            if($id_exists){
+                $validation_response = $this->isValidUpdateManufacturer($data);
 
+                if($validation_response === true){
+                    $this->manufacturers_model->updateManufacturer($data,$manufacturer_id);
+                }else{
+                    $response_data = array(
+                        "code" => 442,
+                        "message" => $validation_response
+                    );
+            
+                    return $this->prepareOkResponse(
+                        $response,
+                        $response_data,
+                        HttpCodes::STATUS_UNPROCESSABLE_ENTITY
+                    );
+                }
+                
+            }else {
+                $response_data = array(
+                    "code" => 404,
+                    "message" => "The manufacturer with id " . $manufacturer_id . " does not exist."
+                );
+        
+                return $this->prepareOkResponse(
+                    $response,
+                    $response_data,
+                    HttpCodes::STATUS_NOT_FOUND
+                );
+            }
+        }
+
+        $response_data = array(
+            "code" => HttpCodes::STATUS_CREATED,
+            "message" => "The list of manufacturer has been successfully updated"
+            );
+        
         return $this->prepareOkResponse($response,$response_data, HttpCodes::STATUS_CREATED);
     }
 
