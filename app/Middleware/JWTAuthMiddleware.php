@@ -27,6 +27,7 @@ class JWTAuthMiddleware implements MiddlewareInterface
         */
         
         // 1.a) If the request's uri contains /account or /token, handle the request:
+        //$token = $uri_args['token'];
         //return $handler->handle($request);
 
         // If not:
