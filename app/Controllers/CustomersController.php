@@ -49,38 +49,29 @@ class CustomersController extends BaseController
     }
 
     // ROUTE: / DELETE Customers
-    public function handleDeleteCustomers(Request $request, Response $response)
+    public function handleDeleteCustomer(Request $request, Response $response, array $uri_args)
     {
-        $customers_data = $request->getParsedBody();
-        if (empty($customers_data) || !isset($customers_data)) {
-            throw new HttpBadRequestException($request,
-            "Couldn't process the request... the list of customers was empty!");
-        }
+        $customer_id = $uri_args['customer_id'];
 
-        foreach ($customers_data as $key => $customer) {
-            $customer_id = $customer['customer_id'];
-
-            $validate_id_exist = !empty($this->customers_model->checkIfCustomerExists($customer_id));
-            if ($validate_id_exist === true) {
-                array_shift($customer);
-                $this->customers_model->deleteCustomer($customer_id);
-            } else {
-                $response_data = array(
-                    "code" => 404,
-                    "message" => "The customer with id " . $customer_id . " does not exist."
-                );
-        
-                return $this->prepareOkResponse(
-                    $response,
-                    $response_data,
-                    HttpCodes::STATUS_NOT_FOUND
-                );
-            }
+        $validate_id_exist = !empty($this->customers_model->checkIfCustomerExists($customer_id));
+        if ($validate_id_exist) {
+            $this->customers_model->deleteCustomer($customer_id);
+        } else {
+            $response_data = array(
+                "code" => 404,
+                "message" => "The customer with id " . $customer_id . " does not exist."
+            );
+    
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_NOT_FOUND
+            );
         }
 
         $response_data = array(
             'status' => HttpCodes::STATUS_OK,
-            'message' => 'The customer has been successfully deleted'
+            'message' => 'Customer has been successfully deleted'
         );
 
         return $this->prepareOkResponse(

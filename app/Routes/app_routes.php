@@ -70,7 +70,7 @@ $app->get('/customers', [CustomersController::class, 'handleGetCustomers']);
 
 $app->get('/customers/{customer_id}/cars', [CustomersController::class, 'handleGetCarByCustomerId']);
 // ROUTE: DELETE /customers
-$app->delete('/customers', [CustomersController::class,'handleDeleteCustomers']);
+$app->delete('/customers/{customer_id}', [CustomersController::class,'handleDeleteCustomer']);
 
 // ROUTE: GET /cars
 $app->get('/cars', [CarsController::class, 'handleGetCars']);
