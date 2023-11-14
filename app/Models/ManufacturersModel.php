@@ -59,11 +59,11 @@ class ManufacturersModel extends BaseModel
         return $this->fetchSingle($sql, [':manufacturer_id' => $manufacturer_id]);
     }
 
-    public function updateManufacturer(array $data, array $manufacturer_id){
+    public function updateManufacturer(array $data, int $manufacturer_id){
         $this->update($this->table_name,$data, ['manufacturer_id' => $manufacturer_id]);
     }
 
-    public function deleteManufacturer($manufacturer_id){
-        $this->delete($this->table_name,$manufacturer_id);
+    public function deleteManufacturer(int $manufacturer_id){
+        $this->delete($this->table_name,['manufacturer_id'=>$manufacturer_id]);
     }
 }

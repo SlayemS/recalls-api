@@ -13,9 +13,6 @@ class ManufacturersController extends BaseController
 
     private $manufacturers_model = null;
     
-    private array $rules = array(
-        // Rules for validating films' properties
-    );
 
     public function __construct(){
         $this->manufacturers_model = new ManufacturersModel();
@@ -47,17 +44,26 @@ class ManufacturersController extends BaseController
         $data = $request->getParsedBody();
 
         if(empty($data) || !isset($data)){
+
+            throw new HttpBadRequestException($request, "Couldn't proccess the request. The list of manufacturer is empty");
             throw new HttpBadRequestException($request, "Couldn't proccess the request. The list of manufacturers is empty");
         }
 
 
         foreach($data as $key => $manufacturer){
-            if($this->isValidData($manufacturer, $this->rules)){
+            $validation_response = $this->isValidCreateManufacturer($manufacturer);
+            if($validation_response === true){
                 $this->manufacturers_model->createManufacturer($manufacturer);
             }else{
-                //? Else keep track of the encountered errors. We can maintain an array
-                // We can maintain an array.
-                //TODO: add $validation_response to the list of errors.
+                $response_data = array(
+                    "code" => 422,
+                    "message" => $validation_response
+                );
+                return $this->prepareOkResponse(
+                    $response,
+                    $response_data,
+                    HttpCodes::STATUS_UNPROCESSABLE_ENTITY
+                );
             }
         }
 
@@ -79,15 +85,17 @@ class ManufacturersController extends BaseController
 
         foreach($update_data as $key => $data){
             $manufacturer_id = $data["manufacturer_id"];
-            
+
             $id_exists = !empty($this->manufacturers_model->ifManufacturerExists($manufacturer_id));
             
             if($id_exists){
                 $validation_response = $this->isValidUpdateManufacturer($data);
-
+                
                 if($validation_response === true){
+                    array_shift($data);
                     $this->manufacturers_model->updateManufacturer($data,$manufacturer_id);
                 }else{
+                   
                     $response_data = array(
                         "code" => 442,
                         "message" => $validation_response
@@ -122,24 +130,34 @@ class ManufacturersController extends BaseController
         return $this->prepareOkResponse($response,$response_data, HttpCodes::STATUS_CREATED);
     }
 
-    public function handleDeleteManufacturers(Request $request, Response $response)
+    public function handleDeleteManufacturers(Request $request, Response $response,array $uri_args)
     {
-        $manufacturers_id = $request->getParsedBody();
+        $id = $uri_args['manufacturer_id'];
+        
+        $id_exists = !empty($this->manufacturers_model->ifManufacturerExists($id));
 
-        foreach($manufacturers_id as $key => $where){
-
-        }    
-        if($this->isValidData($where, $this->rules)){
-            $this->manufacturers_model->deleteManufacturer($where);
-        }else{
-                //TODO: add $validation_response to the list of errors.
+        if($id_exists){
+            $this->manufacturers_model->deleteManufacturer($id);
+        }else {
+            $response_data = array(
+                "code" => 404,
+                "message" => "The manufacturer with id " . $id . " does not exist."
+            );
+    
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_NOT_FOUND
+            );
         }
+        
+       
         $response_data = array(
-            "code" => HttpCodes::STATUS_CREATED,
+            "code" => HttpCodes::STATUS_OK,
             "message" => "Deleted!"
         );
 
-        return $this->prepareOkResponse($response,$response_data, HttpCodes::STATUS_CREATED);
+        return $this->prepareOkResponse($response,$response_data, HttpCodes::STATUS_OK);
 
     }
 }

@@ -187,6 +187,34 @@ class BaseController
             return $this->isValidData($data, $rules);
     }
 
+    protected function isValidCreateManufacturer(array $data) : mixed {
+        $rules = array(
+            
+            'manufacturer_name' => [
+                'required',
+                ['lengthMax', 100]
+            ],
+            'country' => [
+                'required',
+                ['lengthMax', 50]
+            ],
+            'city' => [
+                'required',
+                ['lengthMax', 50]
+            ],
+            'founded_year' => [
+                'required',
+                ['date', 'Y']
+            ],
+            'website' => [
+                'required',
+                ['lengthMax', 75]
+            ]
+        );
+
+        return $this->isValidData($data, $rules);
+    }
+
     protected function isValidUpdateManufacturer(array $data) : mixed {
         $rules = array(
             'manufacturer_id' => [
