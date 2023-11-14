@@ -53,12 +53,13 @@ class ModelsController extends BaseController
         $data = $request->getParsedBody();
 
         if(empty($data) || !isset($data)){
-            // throw new HttpBadRequestException($request, "Couldn't proccess the request. The list of manufacturers is empty");
+            throw new HttpBadRequestException($request, "Couldn't proccess the request. The list of manufacturers is empty");
         }
 
 
         foreach($data as $key => $model){
-            if($this->isValidData($model, $this->rules)){
+            $validation_response = $this->isValidCreateModel($model);
+            if($validation_response===true){
                 $this->models_model->createModel($model);
             }else{
                 //? Else keep track of the encountered errors. We can maintain an array

@@ -47,7 +47,7 @@ class ManufacturersController extends BaseController
         $data = $request->getParsedBody();
 
         if(empty($data) || !isset($data)){
-            // throw new HttpBadRequestException($request, "Couldn't proccess the request. The list of manufacturers is empty");
+            throw new HttpBadRequestException($request, "Couldn't proccess the request. The list of manufacturers is empty");
         }
 
 

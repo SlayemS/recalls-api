@@ -107,6 +107,86 @@ class BaseController
         return $this->isValidData($data, $rules);
     }
 
+    protected function isValidCreateModel(array $data) : mixed {
+        $rules = array(
+            'model_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'manufacturer_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'manufacturer_name' => [
+                'required',
+                ['lengthMax', 50]
+            ],
+            'country' => [
+                'required',
+                ['lengthMax', 20]
+            ],
+            'city' => [
+                'required',
+                ['lengthMax', 20]
+            ],
+            'founded_year' => [
+                'required',
+                'integer',
+                ['min', 1900],
+                ['max', 2023]
+            ],
+            'website' => [
+                'required',
+                ['lengthMax', 100000000]
+            ]    
+        );
+            return $this->isValidData($data, $rules);
+    }
+
+    protected function isValidUpdateModel(array $data) : mixed {
+        $rules = array(
+            'model_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'manufacturer_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'manufacturer_name' => [
+                'required',
+                ['lengthMax', 50]
+            ],
+            'country' => [
+                'required',
+                ['lengthMax', 20]
+            ],
+            'city' => [
+                'required',
+                ['lengthMax', 20]
+            ],
+            'founded_year' => [
+                'required',
+                'integer',
+                ['min', 1900],
+                ['max', 2023]
+            ],
+            'website' => [
+                'required',
+                ['lengthMax', 100000000]
+            ]    
+        );
+            return $this->isValidData($data, $rules);
+    }
+
     protected function isValidUpdateManufacturer(array $data) : mixed {
         $rules = array(
             'manufacturer_id' => [

@@ -40,6 +40,15 @@ class ModelsModel extends BaseModel
             $sql .= "AND power_type LIKE CONCAT('%', :power_type, '%')";    
             $query_values[':power_type'] = $filters['power_type'];
         }
+
+        if(isset($filters['sort_by'])){
+            if ($filters['sort_by'] == 'asc') {
+                $sql .= "ORDER BY model_id ASC";    
+            }
+            else if ($filters['sort_by'] == 'desc') {
+                $sql .= "ORDER BY model_id DESC";
+            }
+        }
         
         return $this->paginate($sql,$query_values);
     }

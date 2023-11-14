@@ -28,6 +28,15 @@ class ManufacturersModel extends BaseModel
             $sql .= "AND founded_year LIKE CONCAT(:year, '%')";    
             $query_values[':year'] = $filters['year'];
         }
+
+        if(isset($filters['sort_by'])){
+            if ($filters['sort_by'] == 'asc') {
+                $sql .= "ORDER BY manufacturer_id ASC";    
+            }
+            else if ($filters['sort_by'] == 'desc') {
+                $sql .= "ORDER BY manufacturer_id DESC";
+            }
+        }
         return $this->paginate($sql,$query_values);
     }
 
