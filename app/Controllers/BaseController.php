@@ -35,44 +35,6 @@ class BaseController
         return $this->isValidData($paging_params, $rules);
     }
 
-    protected function isValidCreateAccount(array $data) : mixed {
-        $rules = array(
-            // 'user_id' => [
-            //     'required',
-            //     'integer',
-            //     ['min', 1],
-            //     ['max', 100000000]
-            // ],
-            'first_name' => [
-                'required',
-                ['lengthMax', 100]
-            ],
-            'last_name' => [
-                'required',
-                ['lengthMax', 150]
-            ],
-            'email' => [
-                'required',
-                ['lengthMax', 150]
-            ],
-            'password' => [
-                'required',
-                ['lengthMax', 255]
-            ],
-            'role' => [
-                'required',
-                ['lengthMax', 10],
-            ],
-            'created_at' => [
-                'required',
-                'float',
-                ['min', 1],
-            ],
-        );
-
-        return $this->isValidData($data, $rules);
-    }
-
     protected function isValidCreateRecall(array $data) : mixed {
         $rules = array(
             'model_id' => [

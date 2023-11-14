@@ -18,6 +18,34 @@ class AccountsController extends BaseController
 {
     private $accounts_model = null;
 
+    private $rules_create = array(
+        'first_name' => [
+            'required',
+            ['lengthMax', 100]
+        ],
+        'last_name' => [
+            'required',
+            ['lengthMax', 150]
+        ],
+        'email' => [
+            'required',
+            ['lengthMax', 150]
+        ],
+        'password' => [
+            'required',
+            ['lengthMax', 255]
+        ],
+        'role' => [
+            'required',
+            ['lengthMax', 10],
+        ],
+        'created_at' => [
+            'required',
+            'integer',
+            ['min', 1],
+        ],
+    );
+
     public function __construct()
     {
         $this->accounts_model = new AccountsModel();
@@ -27,12 +55,23 @@ class AccountsController extends BaseController
         $account_data = $request->getParsedBody();
         // 1) Verify if any information about the new account to be created was included in the 
         // request.
-        // TODO: Do a check with rules
         if (empty($account_data)) {
             return $this->prepareOkResponse($response, ['error' => true, 'message' => 'No data was provided in the request.'], 400);
         }
+        $validation_response = $this->isValidData($account_data, $this->rules_create);
+        if ($validation_response === false) {
+            $response_data = array(
+                "code" => 422,
+                "message" => $validation_response
+            );
+            return $this->prepareOkResponse(
+                $response,
+                $response_data,
+                HttpCodes::STATUS_UNPROCESSABLE_ENTITY
+            );
+        }
         if ($this->accounts_model->isAccountExist($account_data['email'])) { // Check if email already in use
-            return $this->prepareOkResponse($response, ['error'=> true, 'message'=> 'Email is already in use.'], 400);
+            return $this->prepareOkResponse($response, ['error'=> true, 'message'=> 'Email is already in use.'], 422);
         }
 
         //TODO: before creating the account, verify if there is already an existing one with the provided email.
