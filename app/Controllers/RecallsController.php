@@ -5,6 +5,7 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Fig\Http\Message\StatusCodeInterface as HttpCodes;
+use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Exceptions\HttpInvalidInputException;
 use Vanier\Api\Models\RecallsModel;
 
@@ -41,17 +42,15 @@ class RecallsController extends BaseController
         $recalls_data = $request->getParsedBody();
 
         if (empty($recalls_data) || !isset($recalls_data)) {
-            // throw new HttpInvalidInputException($request,
-            // "Couldn't process the request... the list of recalls was empty!");
+            throw new HttpBadRequestException($request,
+            "Couldn't process the request... the list of recalls was empty!");
         }
 
         foreach ($recalls_data as $key => $recall) {
-            $validation_response = $this->isValidData($recall, $this->rules_create);
+            $validation_response = $this->isValidCreateRecall($recall);
             if ($validation_response === true) {
                 $this->recalls_model->createRecall($recall);
-
             } else {
-
                 $response_data = array(
                     "code" => 422,
                     "message" => $validation_response

@@ -28,6 +28,14 @@ class RecallsModel extends BaseModel
             $sql .= "AND component LIKE CONCAT('%', :component, '%')";    
             $query_values[':component'] = $filters['component'];
         }
+        // sort by model_id
+        if(isset($filters['sorting']) && $filters['sorting'] == 'asc'){
+            $sql .= "ORDER BY model_id ASC";    
+        }
+        else {
+            $sql .= "ORDER BY model_id DESC";
+        }
+
         return $this->paginate($sql,$query_values);
     }
 
@@ -39,6 +47,10 @@ class RecallsModel extends BaseModel
         $sql = "SELECT * FROM `instances` WHERE recall_id = :recall_id";
 
         return $this->paginate($sql, $query_values);
+    }
+
+    public function createRecall(array $new_recall) {
+        $this->insert($this->table_name, $new_recall);
     }
 
 }
