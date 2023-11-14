@@ -4,6 +4,8 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Fig\Http\Message\StatusCodeInterface as HttpCodes;
+use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Models\CustomersModel;
 use Vanier\Api\Models\CarsModel;
 
@@ -44,5 +46,47 @@ class CustomersController extends BaseController
         //$car = $this->cars_model->getAll($filters);
 
         return $this->prepareOkResponse($response, (array)$car);
+    }
+
+    // ROUTE: / DELETE Customers
+    public function handleDeleteCustomers(Request $request, Response $response)
+    {
+        $customers_data = $request->getParsedBody();
+        if (empty($customers_data) || !isset($customers_data)) {
+            throw new HttpBadRequestException($request,
+            "Couldn't process the request... the list of customers was empty!");
+        }
+
+        foreach ($customers_data as $key => $customer) {
+            $customer_id = $customer['customer_id'];
+
+            $validate_id_exist = !empty($this->customers_model->checkIfCustomerExists($customer_id));
+            if ($validate_id_exist === true) {
+                array_shift($customer);
+                $this->customers_model->deleteCustomer($customer_id);
+            } else {
+                $response_data = array(
+                    "code" => 404,
+                    "message" => "The customer with id " . $customer_id . " does not exist."
+                );
+        
+                return $this->prepareOkResponse(
+                    $response,
+                    $response_data,
+                    HttpCodes::STATUS_NOT_FOUND
+                );
+            }
+        }
+
+        $response_data = array(
+            'status' => HttpCodes::STATUS_OK,
+            'message' => 'The customer has been successfully deleted'
+        );
+
+        return $this->prepareOkResponse(
+            $response,
+            $response_data,
+            HttpCodes::STATUS_OK
+        );
     }
 }

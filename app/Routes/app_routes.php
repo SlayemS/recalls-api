@@ -69,6 +69,8 @@ $app->put('/recalls', [RecallsController::class, 'handleUpdateRecalls']);
 $app->get('/customers', [CustomersController::class, 'handleGetCustomers']);
 
 $app->get('/customers/{customer_id}/cars', [CustomersController::class, 'handleGetCarByCustomerId']);
+// ROUTE: DELETE /customers
+$app->delete('/customers', [CustomersController::class,'handleDeleteCustomers']);
 
 // ROUTE: GET /cars
 $app->get('/cars', [CarsController::class, 'handleGetCars']);
