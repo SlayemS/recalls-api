@@ -32,4 +32,22 @@ class InstancesModel extends BaseModel
 
         return $this->paginate($sql, $query_values);
     }
+
+    public function createInstance(array $new_instance) {
+        $this->insert($this->table_name, $new_instance);
+    }
+
+    public function updateInstance(int $instance_id, array $updated_instance) {
+        $this->update($this->table_name, $updated_instance, ['instance_id' => $instance_id]);
+    }
+
+    public function deleteInstance(int $instance_id) {
+        $this->delete($this->table_name, ['instance_id' => $instance_id]);
+    }
+
+    public function checkIfInstanceExists(int $instance_id) {
+        $sql = "SELECT * FROM $this->table_name WHERE instance_id = :instance_id";
+
+        return $this->fetchSingle($sql, [':instance_id' => $instance_id]);
+    }
 }

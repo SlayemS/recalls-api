@@ -77,7 +77,17 @@ $app->get('/cars', [CarsController::class, 'handleGetCars']);
 
 $app->get('/cars/{car_id}/instances', [CarsController::class, 'handleGetInstanceByCarId']);
 
-// ROUTE: GET /instances
+// ROUTE: /instances
+// GET
 $app->get('/instances', [InstancesController::class, 'handleGetInstances']);
 
 $app->get('/instances/{instance_id}/repairs', [InstancesController::class, 'handleGetRepairsByInstanceId']);
+
+// POST
+$app->post('/instances', [InstancesController::class, 'handleCreateInstances']);
+
+// PUT
+$app->put('/instances', [InstancesController::class, 'handleUpdateInstances']);
+
+// DELETE
+$app->delete('/instances/{instance_id}', [InstancesController::class, 'handleDeleteInstanceById']);
