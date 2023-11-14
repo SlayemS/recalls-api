@@ -55,4 +55,13 @@ class RecallsModel extends BaseModel
         $this->insert($this->table_name, $new_recall);
     }
 
+    public function checkIfRecallExists(int $recall_id) {
+        $sql = "SELECT * FROM $this->table_name WHERE recall_id = :recall_id";
+
+        return $this->fetchSingle($sql, [':recall_id' => $recall_id]);
+    }
+
+    public function updateRecall(int $recall_id, array $updated_recall) {
+        $this->update($this->table_name, $updated_recall, ['recall_id' => $recall_id]);
+    }
 }

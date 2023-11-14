@@ -64,8 +64,6 @@ $app->get('/recalls/{recall_id}/instance', [RecallsController::class, 'handleGet
 $app->post('/recalls', [RecallsController::class, 'handleCreateRecalls']);
 // ROUTE PUT /recalls
 $app->put('/recalls', [RecallsController::class, 'handleUpdateRecalls']);
-// ROUTE: DELETE /recalls
-$app->delete('/recalls', [RecallsController::class,'handleDeleteRecalls']);
 
 // ROUTE: GET /customers
 $app->get('/customers', [CustomersController::class, 'handleGetCustomers']);

@@ -68,6 +68,45 @@ class BaseController
         return $this->isValidData($data, $rules);
     }
 
+    protected function isValidUpdateRecall(array $data) : mixed {
+        $rules = array(
+            'recall_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'model_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'description' => [
+                'required',
+                ['lengthMax', 150]
+            ],
+            'issue_date' => [
+                'required',
+                ['date', 'Y-m-d']
+            ],
+            'fix_date' => [
+                'required',
+                ['date', 'Y-m-d']
+            ],
+            'subject' => [
+                'required',
+                ['lengthMax', 50]
+            ],
+            'component' => [
+                'required',
+                ['lengthMax', 30]
+            ]
+        );
+
+        return $this->isValidData($data, $rules);
+    }
+
     protected function isValidData(array $data, array $rules) : mixed {
         $validator = new Validator($data, [], 'en');
         $validator->mapFieldsRules($rules);
