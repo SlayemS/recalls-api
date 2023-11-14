@@ -223,6 +223,23 @@ class BaseController
                 ['min', 1],
                 ['max', 100000000]
             ],
+            'manufacturer_name' => [
+                ['lengthMax',100]
+            ],
+            'country' => [
+                ['lengthMax',50]
+            ],
+            'city' => [
+                ['lengthMax',50]
+            ],
+            'founded_year' => [
+                'integer',
+                ['date','Y']
+            ],
+            'website' => [
+                ['lengthMax',75]
+            ],
+            
             
         );
 
