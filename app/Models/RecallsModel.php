@@ -29,11 +29,13 @@ class RecallsModel extends BaseModel
             $query_values[':component'] = $filters['component'];
         }
         // sort by model_id
-        if(isset($filters['sorting']) && $filters['sorting'] == 'asc'){
-            $sql .= "ORDER BY model_id ASC";    
-        }
-        else {
-            $sql .= "ORDER BY model_id DESC";
+        if(isset($filters['sort_by'])){
+            if ($filters['sort_by'] == 'asc') {
+                $sql .= "ORDER BY model_id ASC";    
+            }
+            else if ($filters['sort_by'] == 'desc') {
+                $sql .= "ORDER BY model_id DESC";
+            }
         }
 
         return $this->paginate($sql,$query_values);
