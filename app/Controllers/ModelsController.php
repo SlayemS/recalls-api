@@ -112,7 +112,38 @@ class ModelsController extends BaseController
         }
 
         foreach($update_data as $key => $data){
-
+            $model_id = $data['$model_id'];
+            $valid_id_exist = !empty($this->models_model->checkIfModelExists($model_id));
+            if($valid_id_exist){
+                $validation_response = $this->isValidUpdateModel($data);
+                if($validation_response===true){
+                    $this->models_model->updateModel($model_id, $data);
+                }    
+                else {
+                    $response_data = array(
+                        "code" => 442,
+                        "message" => $validation_response
+                    );
+            
+                    return $this->prepareOkResponse(
+                        $response,
+                        $response_data,
+                        HttpCodes::STATUS_UNPROCESSABLE_ENTITY
+                    );
+                }
+            }
+            else {
+                $response_data = array(
+                    "code" => 404,
+                    "message" => "The model with id " . $model_id . " does not exist."
+                );
+        
+                return $this->prepareOkResponse(
+                    $response,
+                    $response_data,
+                    HttpCodes::STATUS_NOT_FOUND
+                );
+            }
         }
         
         foreach($whereArr as $key => $where){
