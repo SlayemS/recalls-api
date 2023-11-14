@@ -38,7 +38,7 @@ $app->put('/manufacturers', [ManufacturersController::class, 'handleUpdateManufa
 // ROUTE: GET /models by manufacturer_id
 $app->get('/manufacturers/{manufacturer_id}/models', [ManufacturersController::class, 'handleGetModelsByManufacturerId']);
 // ROUTE: DELETE /manufacturers
-$app->delete('/manufacturers', [ManufacturersController::class,'handleDeleteManufacturers']);
+$app->delete('/manufacturers/{manufacturer_id}', [ManufacturersController::class,'handleDeleteManufacturers']);
 
 // ROUTE: GET /models
 $app->get('/models', [ModelsController::class, 'handleGetModels']);
