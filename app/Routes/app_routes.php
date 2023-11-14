@@ -11,6 +11,7 @@ use Vanier\Api\Controllers\InstancesController;
 use Vanier\Api\Controllers\RepairsController;
 use Vanier\Api\Controllers\CustomersController;
 use Vanier\Api\Controllers\RecallsController;
+use Vanier\Api\Controllers\AccountsController;
 
 // Import the app instance into this file's scope.
 global $app;
@@ -91,3 +92,11 @@ $app->put('/instances', [InstancesController::class, 'handleUpdateInstances']);
 
 // DELETE
 $app->delete('/instances/{instance_id}', [InstancesController::class, 'handleDeleteInstanceById']);
+
+
+// /account
+$app->post('/account', [AccountsController::class, 'handleCreateAccount']);
+
+// /token
+$app->post('/token', [AccountsController::class, 'handleGenerateToken']);
+

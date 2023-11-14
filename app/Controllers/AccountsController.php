@@ -27,20 +27,31 @@ class AccountsController extends BaseController
         $account_data = $request->getParsedBody();
         // 1) Verify if any information about the new account to be created was included in the 
         // request.
+        // TODO: Do a check with rules
         if (empty($account_data)) {
             return $this->prepareOkResponse($response, ['error' => true, 'message' => 'No data was provided in the request.'], 400);
         }
+        if ($this->accounts_model->isAccountExist($account_data['email'])) { // Check if email already in use
+            return $this->prepareOkResponse($response, ['error'=> true, 'message'=> 'Email is already in use.'], 400);
+        }
+
         //TODO: before creating the account, verify if there is already an existing one with the provided email.
         // 2) Data was provided, we attempt to create an account for the user.                
+        $account = $this->accounts_model->createAccount($account_data);
 
-        
-        //if (!$new_account_id) {
-            // 2.a) Failed to create the new account.
-        //}
         
         // 3) A new account has been successfully created. 
         // Prepare and return a response.  
-        return $response;
+        $response_data = array(
+            "code" => HttpCodes::STATUS_CREATED,
+            "message" => "Account has been created"
+        );
+
+        return $this->prepareOkResponse(
+            $response,
+            $response_data,
+            HttpCodes::STATUS_CREATED
+        );
     }
 
     public function handleGenerateToken(Request $request, Response $response, array $args)
