@@ -23,6 +23,7 @@ $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 
 $app->addMiddleware(new ContentNegotiationMiddleware());
+$app->addMiddleware(new JWTAuthMiddleware());
 // NOTE: the error handling middleware MUST be added last.
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 $errorMiddleware->getDefaultErrorHandler()->forceContentType(APP_MEDIA_TYPE_JSON);
