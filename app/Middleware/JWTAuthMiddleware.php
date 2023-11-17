@@ -15,6 +15,12 @@ use Vanier\Api\Exceptions\HttpAuthenticationException;
 use Vanier\Api\Exceptions\HttpUnexpectedValueException;
 use Vanier\Api\Helpers\JWTManager;
 
+//Logging
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use DateTimeZone;
+
 class JWTAuthMiddleware implements MiddlewareInterface
 {
 
@@ -27,6 +33,17 @@ class JWTAuthMiddleware implements MiddlewareInterface
               We need to ignore the routes that enables client applications
               to create account and request a JWT token.
         */
+
+        $logger = new Logger('Recalls_Logger');
+        
+        $logger->setTimezone(new DateTimeZone('America/Toronto'));
+        // Now add some handlers
+        $logger->pushHandler(new StreamHandler(APP_LOG_DIR.'/access_logs.log', Logger::DEBUG));
+        // You can now use your logger
+        $logger->info('My logger is now ready');
+
+        
+
 
         // 1.a) If the request's uri contains /account or /token, handle the request:
         $request_uri = $request->getUri();
