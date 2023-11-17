@@ -56,7 +56,7 @@ class AccountsController extends BaseController
         // 1) Verify if any information about the new account to be created was included in the 
         // request.
         if (empty($account_data)) {
-            return $this->prepareOkResponse($response, ['error' => true, 'message' => 'No data was provided in the request.'], 400);
+            return $this->prepareOkResponse($response, ['status'=> "failed", 'message' => 'No data was provided in the request.'], 400);
         }
         $validation_response = $this->isValidData($account_data, $this->rules_create);
         if ($validation_response === false) {
@@ -99,32 +99,51 @@ class AccountsController extends BaseController
         //var_dump($user_data);exit;
 
         //-- 1) Reject the request if the request body is empty.
+        if (empty($account_data)) {
+            return $this->prepareOkResponse($response, ['status'=> "failed", 'message' => 'No data was provided in the request.'], 422);
+        }
 
         //-- 2) Retrieve and validate the account credentials.
+        if (empty($account_data['email']) || empty($account_data['password'])) {
+            return $this->prepareOkResponse($response, ['status'=> "failed", 'message' => 'Email or password cannot be empty.'], 422);
+        }
 
         //-- 3) Is there an account matching the provided email address in the DB?
+        $fetched_account_data = $this->accounts_model->isAccountExist($account_data['email']);
+        if ($fetched_account_data) {
+            
+            //-- 4) If so, verify whether the provided password is valid.
+            if ($this->accounts_model->isPasswordValid($account_data['email'], $account_data['password'])) {
+                return $this->prepareOkResponse($response, ['status'=> "failed", 'message'=> 'Account credentials incorrect.'], 401);
+            }
 
-        //-- 4) If so, verify whether the provided password is valid.
-
-        
-        //if (!$db_account) {
-            //-- 4.a) If the password is invalid --> prepare and return a response with a message indicating the 
-            // reason.            
-        //}
-        
+        } else {
+            return $this->prepareOkResponse($response, ['status'=> "failed", 'message'=> 'Account does not exist.'], 422);
+        }
 
         //-- 5) Valid account detected => Now, we return an HTTP response containing
         // the newly generated JWT.
         // TODO: add the account role to be included as JWT private claims.
         //-- 5.a): Prepare the private claims: user_id, email, and role.
+        $data_for_token = array($fetched_account_data["user_id"], $fetched_account_data["email"], $fetched_account_data["role"]);
 
         // Current time stamp * 60 seconds        
         $expires_in = time() + 60; //! NOTE: Expires in 1 minute.
         //!note: the time() function returns the current timestamp, which is the number of seconds since January 1st, 1970
         //-- 5.b) Create a JWT using the JWTManager's generateJWT() method.
-        //$jwt = JWTManager::generateJWT($account_data, $expires_in);
+        $jwt = JWTManager::generateJWT($data_for_token, $expires_in);
         //--
         // 5.c) Prepare and return a response with a JSON doc containing the jwt.
-        return $response;
+        $response_data = array(
+            "status"=>"success",
+            "token"=>$jwt,
+            "message"=>"Logged in successfully!"
+        );
+
+        return $this->prepareOkResponse(
+            $response,
+            $response_data,
+            HttpCodes::STATUS_CREATED
+        );
     }
 }

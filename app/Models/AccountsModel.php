@@ -43,7 +43,7 @@ class AccountsModel extends BaseModel
         $sql = "SELECT * FROM $this->table_name WHERE email= :email";
         $account = $this->fetchSingle($sql, [":email" => $email]);
         if ($account && is_array($account)) {
-            if (password_verify($input_password, $account['password'])) {
+            if (password_verify($input_password, $this->getHashedPassword($account['password']))) {
                 return $account;
             }
         }
