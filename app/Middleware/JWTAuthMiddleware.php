@@ -7,10 +7,12 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Psr\Http\Message\ResponseInterface;
+use Firebase\JWT\ExpiredException;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpUnauthorizedException;
 use UnexpectedValueException;
-
+use Vanier\Api\Exceptions\HttpAuthenticationException;
+use Vanier\Api\Exceptions\HttpUnexpectedValueException;
 use Vanier\Api\Helpers\JWTManager;
 
 class JWTAuthMiddleware implements MiddlewareInterface
@@ -41,40 +43,55 @@ class JWTAuthMiddleware implements MiddlewareInterface
 
             // 3) Parse the token: remove the "Bearer " word.
             $token = str_replace("Bearer", "", $auth_head);
+            
+
+
+            //-- 4) Try to decode the JWT token
+            //@see https://github.com/firebase/php-jwt#exception-handling
+            $decoded = "";
+            try {
+                $decoded = JWTManager::decodeJWT(trim($token), JWTManager::SIGNATURE_ALGO);
+            } catch (ExpiredException $e) {
+                // expired token
+                throw new HttpAuthenticationException($request);
+            } catch (LogicException $e) {
+                // errors having to do with environmental setup or malformed JWT Keys
+                throw new HttpAuthenticationException($request);
+            } catch (UnexpectedValueException $e) {
+                // errors having to do with JWT signature and claims
+                throw new HttpUnexpectedValueException($request);
+            }
+
+            // print_r($decoded);
+            // echo $decoded[2];
+
+
+            // --5) Access to POST, PUT and DELETE operations must be restricted.
+            //     Only admin accounts can be authorized.
+            // If the request's method is: POST, PUT, or DELETE., only admins are allowed.
+            // throw new HttpForbiddenException($request, 'Insufficient permission!');
+            
+            $method = $request->getMethod();
+
+            if (in_array($method, array("POST", "PUT", "DELETE"))) {
+                if ($decoded[2] == "admin") {
+                    
+                } else {
+                    throw new HttpForbiddenException($request, "Insufficient permission!");
+                }
+            }
+
+
+
+            //-- 6) The client application has been authorized:
+            // 6.a) Now we need to store the token payload in the request object. The payload is needed for logging purposes and 
+            // needs to be passed to the request's handling callbacks.  This will allow the target resource's callback 
+            // to access the token payload for various purposes (such as logging, etc.)        
+            // Use the APP_JWT_TOKEN_KEY as attribute name. 
+
+            //-- 7) At this point, the client app's request has been authorized, we pass the request to the next
+            // middleware in the middleware stack. 
+            return $handler->handle($request);
         }
-
-
-        //-- 4) Try to decode the JWT token
-        //@see https://github.com/firebase/php-jwt#exception-handling
-        $decodedToken  = "";
-        try {
-            $decodedToken = JWTManager::decodeJWT($token, "HS256");
-        } catch (LogicException $e) {
-            // errors having to do with environmental setup or malformed JWT Keys
-            throw $e;
-        } catch (UnexpectedValueException $e) {
-            // errors having to do with JWT signature and claims
-            throw $e;
-        }
-        // $decoded = JWTManager::decode($jwt, new Key($key, 'HS256'));
-
-        //echo $decodedToken;        exit;
-
-
-        // --5) Access to POST, PUT and DELETE operations must be restricted.
-        //     Only admin accounts can be authorized.
-        // If the request's method is: POST, PUT, or DELETE., only admins are allowed.
-        // throw new HttpForbiddenException($request, 'Insufficient permission!');
-
-
-        //-- 6) The client application has been authorized:
-        // 6.a) Now we need to store the token payload in the request object. The payload is needed for logging purposes and 
-        // needs to be passed to the request's handling callbacks.  This will allow the target resource's callback 
-        // to access the token payload for various purposes (such as logging, etc.)        
-        // Use the APP_JWT_TOKEN_KEY as attribute name. 
-
-        //-- 7) At this point, the client app's request has been authorized, we pass the request to the next
-        // middleware in the middleware stack. 
-        return $handler->handle($request);
     }
 }

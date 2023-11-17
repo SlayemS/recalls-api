@@ -116,8 +116,8 @@ class InstancesController extends BaseController
         $instances_data = $request->getParsedBody();
 
         if (empty($instances_data) || !isset($instances_data)) {
-            // throw new HttpInvalidInputException($request,
-            // "Couldn't process the request... the list of instances was empty!");
+            throw new HttpInvalidInputException($request,
+            "Couldn't process the request... the list of instances was empty!");
         }
 
 
