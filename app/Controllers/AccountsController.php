@@ -128,7 +128,7 @@ class AccountsController extends BaseController
         $data_for_token = array($fetched_account_data["user_id"], $fetched_account_data["email"], $fetched_account_data["role"]);
 
         // Current time stamp * 60 seconds        
-        $expires_in = time() + 60 * 60; //! NOTE: Expires in 1 minute.
+        $expires_in = time() + 60; //! NOTE: Expires in 1 minute.
         //!note: the time() function returns the current timestamp, which is the number of seconds since January 1st, 1970
         //-- 5.b) Create a JWT using the JWTManager's generateJWT() method.
         $jwt = JWTManager::generateJWT($data_for_token, $expires_in);

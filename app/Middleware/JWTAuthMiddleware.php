@@ -40,8 +40,8 @@ class JWTAuthMiddleware implements MiddlewareInterface
         // Now add some handlers
         $logger->pushHandler(new StreamHandler(APP_LOG_DIR.'/access_logs.log', Logger::DEBUG));
         // You can now use your logger
-        $logger->info('My logger is now ready');
-
+        // $logger->info('My logger is now ready');
+        
         
 
 
@@ -49,7 +49,10 @@ class JWTAuthMiddleware implements MiddlewareInterface
         $request_uri = $request->getUri();
         $token =  "";
         if (str_ends_with($request_uri, "/account") || str_ends_with($request_uri, "/token")) {
+            
+            // $logger->info('My logger is now ready', ["Title"]);
             return $handler->handle($request);
+            
         }
 
         // If not:
@@ -70,12 +73,15 @@ class JWTAuthMiddleware implements MiddlewareInterface
                 $decoded = JWTManager::decodeJWT(trim($token), JWTManager::SIGNATURE_ALGO);
             } catch (ExpiredException $e) {
                 // expired token
+                $logger->info('Token is expired', ["Method" => $request->getMethod(), "URI" => $request->getUri(), "Query Params" => $request->getQueryParams(), "Ip" => $_SERVER['REMOTE_ADDR'] ]);
                 throw new HttpAuthenticationException($request);
             } catch (LogicException $e) {
                 // errors having to do with environmental setup or malformed JWT Keys
+                $logger->info('Log Exception', ["Method" => $request->getMethod(), "URI" => $request->getUri(), "Query Params" => $request->getQueryParams(), "Ip" => $_SERVER['REMOTE_ADDR'] ]);
                 throw new HttpAuthenticationException($request);
             } catch (UnexpectedValueException $e) {
                 // errors having to do with JWT signature and claims
+                $logger->info('Unexpected value', ["Method" => $request->getMethod(), "URI" => $request->getUri(), "Query Params" => $request->getQueryParams(), "Ip" => $_SERVER['REMOTE_ADDR'] ]);
                 throw new HttpUnexpectedValueException($request);
             }
 
@@ -90,7 +96,7 @@ class JWTAuthMiddleware implements MiddlewareInterface
             
             $method = $request->getMethod();
 
-            if (in_array($method, array("GET", "POST", "PUT", "DELETE")) && $decoded[2] != "admin") {
+            if (in_array($method, array("POST", "PUT", "DELETE")) && $decoded[2] != "admin") {
                 throw new HttpForbiddenException($request, "Insufficient permission!");
             }
 
@@ -104,6 +110,9 @@ class JWTAuthMiddleware implements MiddlewareInterface
 
             //-- 7) At this point, the client app's request has been authorized, we pass the request to the next
             // middleware in the middleware stack. 
+
+            $logger->info('Route successfully accessed', ["Method" => $request->getMethod(), "URI" => $request->getUri(), "Query Params" => $request->getQueryParams(), "Ip" => $_SERVER['REMOTE_ADDR'] ]);
+            
             return $handler->handle($request);
         }
     }
