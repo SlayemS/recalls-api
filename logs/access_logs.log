@@ -45,4 +45,4 @@
 [2023-11-24T13:47:10.912715-05:00] Recalls_Logger.INFO: Unexpected value {"Method":"GET","URI":{"Slim\\Psr7\\Uri":"http://10.1.3.44/recalls-api/customers/5/car?sfweWE"},"Query Params":{"sfweWE":""},"Ip":"10.1.3.24"} []
 [2023-11-24T13:47:15.304826-05:00] Recalls_Logger.INFO: Unexpected value {"Method":"GET","URI":{"Slim\\Psr7\\Uri":"http://10.1.3.44/recalls-api/customers/5/car?sfweWE=1111"},"Query Params":{"sfweWE":"1111"},"Ip":"10.1.3.24"} []
 [2023-11-24T13:47:23.134968-05:00] Recalls_Logger.INFO: Unexpected value {"Method":"GET","URI":{"Slim\\Psr7\\Uri":"http://10.1.3.44/recalls-api/customers/5/car?sfweWE=1111&SSSSSSSSSSS=DQER"},"Query Params":{"sfweWE":"1111","SSSSSSSSSSS":"DQER"},"Ip":"10.1.3.24"} []
-[2023-11-24T13:49:18.897966-05:00] Recalls_Logger.INFO: Unexpected value {"Method":"GET","URI":{"Slim\\Psr7\\Uri":"http://10.1.3.44/recalls-api/customers/5/car?thats%20crazy=but%20did%20i%20ask"},"Query Params":{"thats_crazy":"but did i ask"},"Ip":"10.1.3.24"} []
+
