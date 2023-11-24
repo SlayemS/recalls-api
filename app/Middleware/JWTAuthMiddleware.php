@@ -110,6 +110,9 @@ class JWTAuthMiddleware implements MiddlewareInterface
 
             //-- 7) At this point, the client app's request has been authorized, we pass the request to the next
             // middleware in the middleware stack. 
+
+            $logger->info('Route successfully accessed', ["Method" => $request->getMethod(), "URI" => $request->getUri(), "Query Params" => $request->getQueryParams(), "Ip" => $_SERVER['REMOTE_ADDR'] ]);
+            
             return $handler->handle($request);
         }
     }
