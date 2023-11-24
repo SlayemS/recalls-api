@@ -35,7 +35,7 @@ class CarsModel extends BaseModel
             $sql .= "AND customer_id LIKE CONCAT('%', :customer_id, '%')";    
             $query_values[':customer_id'] = $filters['customer_id'];
         }
-        return $this->paginate($sql, $query_values );
+        return $this->paginate($sql, $query_values);
     }
 
     public function getInstanceByCarId(array $filters) {
@@ -46,28 +46,22 @@ class CarsModel extends BaseModel
 
         return $this->paginate($sql, $query_values);
     }
-    
-    
-    // public function getCarsByCustomerId(array $filters) {  // this gotta go in customers model
-    //     $query_values = [];
-    //     $query_values[':actor_id'] = $filters['actor_id'];
 
-    //     $sql = "SELECT * FROM $this->table_name WHERE customer_id = :customer_id";
+    public function createCar(array $new_car) {
+        $this->insert($this->table_name, $new_car);
+    }
 
-    //     if (isset($filters['dealership'])) {
-    //         $sql .= " AND dealership LIKE CONCAT('%', :dealership, '%') ";
-    //         $query_values[':dealership'] = $filters['dealership'];
-    //     }
+    public function checkIfCarExists(int $car_id) {
+        $sql = "SELECT * FROM $this->table_name WHERE car_id = :car_id";
 
-    //     return $this->paginate($sql, $query_values);
-    // }
+        return $this->fetchSingle($sql, [':car_id' => $car_id]);
+    }
 
-    // public function createCar(array $new_car) {
-    //     $this->insert($this->table_name, $new_car);
-    // }
+    public function updateCar(int $car_id, array $updated_car) {
+        $this->update($this->table_name, $updated_car, ['car_id' => $car_id]);
+    }
 
-    // public function checkIfCarExists(int $car_id) {
-    //     $sql = "SELECT * FROM $this->table_name WHERE car_id = :car_id";
-    //     return $this->fetchSingle($sql, [':car_id' => $car_id]);
-    // }
+    public function deleteCar($car_id){
+        $this->delete($this->table_name, $car_id);
+    }
 }

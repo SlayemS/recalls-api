@@ -311,6 +311,94 @@ class BaseController
         return $this->isValidData($data, $rules);
     }
 
+    protected function isValidCreateCar(array $data) : mixed {
+        $rules = array(
+            'customer_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'model_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'purchase_date' => [
+                'required',
+                ['date', 'Y-m-d']
+            ],
+            'dealership' => [
+                'required',
+                ['lengthMax', 50]
+            ],
+            'license_plate' => [
+                'required',
+                ['lengthMax', 10]
+            ],
+            'mileage' => [
+                'required',
+                'integer',
+                ['min', 0],
+                ['max', 999999]
+            ],
+            'color' => [
+                'required',
+                ['lengthMax', 25]
+            ]
+        );
+
+        return $this->isValidData($data, $rules);
+    }
+
+    protected function isValidUpdateCar(array $data) : mixed {
+        $rules = array(
+            'car_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'customer_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'model_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'purchase_date' => [
+                'required',
+                ['date', 'Y-m-d']
+            ],
+            'dealership' => [
+                'required',
+                ['lengthMax', 50]
+            ],
+            'license_plate' => [
+                'required',
+                ['lengthMax', 10]
+            ],
+            'mileage' => [
+                'required',
+                'integer',
+                ['min', 0],
+                ['max', 999999]
+            ],
+            'color' => [
+                'required',
+                ['lengthMax', 25]
+            ]
+        );
+
+        return $this->isValidData($data, $rules);
+    }
+
     protected function isValidData(array $data, array $rules) : mixed {
         $validator = new Validator($data, [], 'en');
         $validator->mapFieldsRules($rules);

@@ -82,7 +82,17 @@ $app->delete('/customers/{customer_id}', [CustomersController::class,'handleDele
 // ROUTE: GET /cars
 $app->get('/cars', [CarsController::class, 'handleGetCars']);
 
+// ROUTE: GET /cars/{car_id}/instances
 $app->get('/cars/{car_id}/instances', [CarsController::class, 'handleGetInstanceByCarId']);
+
+// ROUTE: POST /cars
+$app->post('/cars', [CarsController::class, 'handleCreateCars']);
+
+// ROUTE: PUT /cars
+$app->put('/cars', [CarsController::class, 'handleUpdateCars']);
+
+// ROUTE: DELETE /cars
+$app->delete('/cars/{car_id}', [CarsController::class,'handleDeleteCars']);
 
 // ROUTE: /instances
 // GET
