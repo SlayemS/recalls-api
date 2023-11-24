@@ -56,6 +56,12 @@ $app->delete('/models', [ModelsController::class,'handleDeleteModels']);
 
 // ROUTE: GET /repairs
 $app->get('/repairs', [RepairsController::class, 'handleGetRepairs']);
+// ROUTE: POST /repairs
+$app->post('/repairs', [RepairsController::class, 'handleCreateRepairs']);
+// ROUTE: PUT /repairs
+$app->put('/repairs', [RepairsController::class, 'handleUpdateRepairs']);
+// ROUTE: DELETE /repairs/{repair_id}
+$app->delete('/repairs/{repair_id}', [RepairsController::class, 'handleDeleteRepairs']);
 
 // ROUTE: GET /recalls
 $app->get('/recalls', [RecallsController::class, 'handleGetRecalls']);

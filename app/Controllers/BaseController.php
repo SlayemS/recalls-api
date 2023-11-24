@@ -189,7 +189,6 @@ class BaseController
 
     protected function isValidCreateManufacturer(array $data) : mixed {
         $rules = array(
-            
             'manufacturer_name' => [
                 'required',
                 ['lengthMax', 100]
@@ -241,6 +240,72 @@ class BaseController
             ],
             
             
+        );
+
+        return $this->isValidData($data, $rules);
+    }
+
+    protected function isValidCreateRepair(array $data) : mixed {
+        $rules = array(
+            'instance_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'repair_date' => [
+                'required',
+                ['date', 'Y-m-d']
+            ],
+            'cost' => [
+                'required',
+                'numeric',
+                ['min', 0]
+            ],
+            'status' => [
+                'required',
+                ['lengthMax', 20]
+            ],
+            'estimate_time' => [
+                'required',
+                ['lengthMax', 7]
+            ]
+        );
+
+        return $this->isValidData($data, $rules);
+    }
+
+    protected function isValidUpdateRepair(array $data) : mixed {
+        $rules = array(
+            'repair_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'instance_id' => [
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'repair_date' => [
+                'required',
+                ['date', 'Y-m-d']
+            ],
+            'cost' => [
+                'required',
+                'numeric',
+                ['min', 0]
+            ],
+            'status' => [
+                'required',
+                ['lengthMax', 20]
+            ],
+            'estimate_time' => [
+                'required',
+                ['lengthMax', 7]
+            ]
         );
 
         return $this->isValidData($data, $rules);

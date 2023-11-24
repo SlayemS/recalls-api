@@ -48,7 +48,7 @@ class CustomersController extends BaseController
         return $this->prepareOkResponse($response, (array)$car);
     }
 
-    // ROUTE: / DELETE Customers
+    // ROUTE: / DELETE Customers/{customer_id}
     public function handleDeleteCustomer(Request $request, Response $response, array $uri_args)
     {
         $customer_id = $uri_args['customer_id'];

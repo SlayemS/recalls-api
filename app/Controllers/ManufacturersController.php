@@ -44,9 +44,7 @@ class ManufacturersController extends BaseController
         $data = $request->getParsedBody();
 
         if(empty($data) || !isset($data)){
-
-            throw new HttpBadRequestException($request, "Couldn't proccess the request. The list of manufacturer is empty");
-            throw new HttpBadRequestException($request, "Couldn't proccess the request. The list of manufacturers is empty");
+            throw new HttpBadRequestException($request, "Couldn't process the request. The list of manufacturer is empty");
         }
 
 
@@ -76,11 +74,11 @@ class ManufacturersController extends BaseController
 
     }
 
-    public function handleUpdateManufacturers(Request $request, Response $response,){
+    public function handleUpdateManufacturers(Request $request, Response $response){
         $update_data = $request->getParsedBody();
 
         if(empty($update_data || !isset($update_data))){
-            throw new HttpBadRequestException($request, "Couldn't proccess the request. The update values are empty");
+            throw new HttpBadRequestException($request, "Couldn't process the request. The update values are empty");
         }
 
         foreach($update_data as $key => $data){

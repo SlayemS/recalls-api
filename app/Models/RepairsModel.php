@@ -31,4 +31,22 @@ class RepairsModel extends BaseModel
 
         return $this->paginate($sql,$query_values);
     }
+
+    public function createRepair(array $new_repair) {
+        $this->insert($this->table_name, $new_repair);
+    }
+
+    public function checkIfRepairExists(int $repair_id) {
+        $sql = "SELECT * FROM $this->table_name WHERE repair_id = :repair_id";
+
+        return $this->fetchSingle($sql, [':repair_id' => $repair_id]);
+    }
+
+    public function updateRepair(int $repair_id, array $updated_repair) {
+        $this->update($this->table_name, $updated_repair, ['repair_id' => $repair_id]);
+    }
+    
+    public function deleteRepair($repair_id){
+        $this->delete($this->table_name, $repair_id);
+    }
 }
