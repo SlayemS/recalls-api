@@ -90,21 +90,17 @@ class JWTAuthMiddleware implements MiddlewareInterface
             
             $method = $request->getMethod();
 
-            if (in_array($method, array("POST", "PUT", "DELETE"))) {
-                if ($decoded[2] == "admin") {
-                    
-                } else {
-                    throw new HttpForbiddenException($request, "Insufficient permission!");
-                }
+            if (in_array($method, array("GET", "POST", "PUT", "DELETE")) && $decoded[2] != "admin") {
+                throw new HttpForbiddenException($request, "Insufficient permission!");
             }
-
-
 
             //-- 6) The client application has been authorized:
             // 6.a) Now we need to store the token payload in the request object. The payload is needed for logging purposes and 
             // needs to be passed to the request's handling callbacks.  This will allow the target resource's callback 
             // to access the token payload for various purposes (such as logging, etc.)        
             // Use the APP_JWT_TOKEN_KEY as attribute name. 
+            
+            $request = $request->withAttribute('APP_JWT_TOKEN_KEY', $token);
 
             //-- 7) At this point, the client app's request has been authorized, we pass the request to the next
             // middleware in the middleware stack. 
