@@ -121,28 +121,30 @@ class BaseController
                 ['min', 1],
                 ['max', 100000000]
             ],
-            'manufacturer_name' => [
+            'year' => [
+                'required',
+                ['lengthMax', 4]
+            ],
+            'vehicle_type' => [
+                'required',
+                ['lengthMax', 20]
+            ],
+            'fuel_type' => [
                 'required',
                 ['lengthMax', 50]
             ],
-            'country' => [
+            'transmission_type' => [
                 'required',
-                ['lengthMax', 20]
+                ['lengthMax', 50]
             ],
-            'city' => [
+            'engine' => [
                 'required',
-                ['lengthMax', 20]
+                ['lengthMax', 50]
             ],
-            'founded_year' => [
+            'power_type' => [
                 'required',
-                'integer',
-                ['min', 1900],
-                ['max', 2023]
-            ],
-            'website' => [
-                'required',
-                ['lengthMax', 100000000]
-            ]    
+                ['lengthMax', 50]
+            ]
         );
             return $this->isValidData($data, $rules);
     }
@@ -161,28 +163,30 @@ class BaseController
                 ['min', 1],
                 ['max', 100000000]
             ],
-            'manufacturer_name' => [
+            'year' => [
+                'required',
+                ['lengthMax', 4]
+            ],
+            'vehicle_type' => [
+                'required',
+                ['lengthMax', 20]
+            ],
+            'fuel_type' => [
                 'required',
                 ['lengthMax', 50]
             ],
-            'country' => [
+            'transmission_type' => [
                 'required',
-                ['lengthMax', 20]
+                ['lengthMax', 50]
             ],
-            'city' => [
+            'engine' => [
                 'required',
-                ['lengthMax', 20]
+                ['lengthMax', 50]
             ],
-            'founded_year' => [
+            'power_type' => [
                 'required',
-                'integer',
-                ['min', 1900],
-                ['max', 2023]
-            ],
-            'website' => [
-                'required',
-                ['lengthMax', 100000000]
-            ]    
+                ['lengthMax', 50]
+            ]
         );
             return $this->isValidData($data, $rules);
     }
