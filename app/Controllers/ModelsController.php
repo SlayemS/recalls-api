@@ -62,9 +62,15 @@ class ModelsController extends BaseController
             if($validation_response===true){
                 $this->models_model->createModel($model);
             }else{
-                //? Else keep track of the encountered errors. We can maintain an array
-                // We can maintain an array.
-                //TODO: add $validation_response to the list of errors.
+                $response_data = array(
+                    "code" => 422,
+                    "message" => $validation_response
+                );
+                return $this->prepareOkResponse(
+                    $response,
+                    $response_data,
+                    HttpCodes::STATUS_UNPROCESSABLE_ENTITY
+                );
             }
         }
 

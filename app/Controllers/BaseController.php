@@ -110,7 +110,6 @@ class BaseController
     protected function isValidCreateModel(array $data) : mixed {
         $rules = array(
             'model_id' => [
-                'required',
                 'integer',
                 ['min', 1],
                 ['max', 100000000]
