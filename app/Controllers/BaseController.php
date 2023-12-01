@@ -336,10 +336,6 @@ class BaseController
                 'required',
                 ['lengthMax', 50]
             ],
-            'license_plate' => [
-                'required',
-                ['lengthMax', 10]
-            ],
             'mileage' => [
                 'required',
                 'integer',
@@ -382,10 +378,6 @@ class BaseController
             'dealership' => [
                 'required',
                 ['lengthMax', 50]
-            ],
-            'license_plate' => [
-                'required',
-                ['lengthMax', 10]
             ],
             'mileage' => [
                 'required',
