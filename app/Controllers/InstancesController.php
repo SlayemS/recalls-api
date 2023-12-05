@@ -219,7 +219,6 @@ class InstancesController extends BaseController
 
     public function handleDeleteInstanceById(Request $request, Response $response, array $uri_args)
     {
-        print_r($uri_args);
         $instance_id = $uri_args['instance_id'];
 
         $validate_id_exist = !empty($this->instances_model->checkIfinstanceExists($instance_id));
