@@ -179,7 +179,6 @@ class InstancesController extends BaseController
                     array_shift($instance);
                     $this->instances_model->updateinstance($instance_id, $instance);
 
-                    echo "RAAA";
                 } else {
                     $response_data = array(
                         "code" => 442,
