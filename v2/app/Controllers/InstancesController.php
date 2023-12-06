@@ -8,11 +8,21 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Models\InstancesModel;
 use Vanier\Api\Exceptions\HttpInvalidInputException;
 
-
+/**
+ * InstancesController
+ *
+ * Controller for the instances page
+ */
 class InstancesController extends BaseController
 {
     private $instances_model = null;
 
+    /**
+     * An array of rules for validating the data provided in the request body
+     * when creating a new instance.
+     * 
+     * @var array of rules
+     */
     private $rules_create = array(
         'recall_id' => [
             'required',
@@ -92,6 +102,14 @@ class InstancesController extends BaseController
         $this->instances_model = new InstancesModel();
     }
 
+    /**
+     * Handle /GET Instances
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return response returns a list of instances
+     */
     public function handleGetInstances(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -105,6 +123,14 @@ class InstancesController extends BaseController
         return $this->prepareOkResponse($response, (array)$instances);
     }
 
+    /**
+     * Handle /GET Instances/{instance_id}/repairs
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args instance_id
+     * @return response returns a list of repairs of an instance specified by the instance_id
+     */
     public function handleGetRepairsByInstanceId(Request $request, Response $response, array $uri_args)
     {
         $repairs = $this->instances_model->getRepairsByInstanceId($uri_args);
@@ -112,6 +138,14 @@ class InstancesController extends BaseController
         return $this->prepareOkResponse($response, (array)$repairs);
     }
 
+    /**
+     * Handle /POST Instances
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return response creates a list of instances
+     * @throws HttpInvalidInputException if the request body is empty
+     */
     public function handleCreateInstances(Request $request, Response $response, array $uri_args) {
         $instances_data = $request->getParsedBody();
 

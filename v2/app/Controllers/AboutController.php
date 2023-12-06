@@ -5,8 +5,21 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+/**
+ * AboutController
+ *
+ * Controller for the about page
+ */
 class AboutController extends BaseController
 {
+    /**
+     * Handle the about page
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return Response
+     */
     public function handleAboutApi(Request $request, Response $response, array $uri_args)
     {
         $data = array(

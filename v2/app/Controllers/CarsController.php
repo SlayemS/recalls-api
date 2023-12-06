@@ -9,6 +9,11 @@ use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Models\CarsModel;
 use Vanier\Api\Exceptions\HttpInvalidInputException;
 
+/**
+ * CarsController
+ *
+ * Controller for the cars page
+ */
 class CarsController extends BaseController
 {
     private $cars_model = null;
@@ -17,6 +22,14 @@ class CarsController extends BaseController
         $this->cars_model = new CarsModel();
     }
 
+    /**
+     * Handle /GET Cars
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return response returns a list of cars
+     */
     public function handleGetCars(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -31,6 +44,14 @@ class CarsController extends BaseController
     }
 
 
+    /**
+     * Handle /GET Cars/{car_id}
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return response returns a car specified by the car_id
+     */
     public function handleGetInstanceByCarId(Request $request, Response $response, array $uri_args)
     {
         $instance = $this->cars_model->getInstanceByCarId($uri_args);
@@ -38,7 +59,13 @@ class CarsController extends BaseController
         return $this->prepareOkResponse($response, (array)$instance);
     }
 
-    // / POST Cars
+    /**
+     * Handle /POST Cars/{car_id}/repairs
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return response creates a list of cars
+     */
     public function handleCreateCars(Request $request, Response $response) {
         $cars_data = $request->getParsedBody();
 
@@ -76,7 +103,13 @@ class CarsController extends BaseController
         );
     }
 
-    // / PUT Cars
+    /**
+     * Handle /PUT Cars
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return response updates a list of cars specified by the body of the request
+     */
     public function handleUpdateCars(Request $request, Response $response)
     {
         $cars_data = $request->getParsedBody();
@@ -133,6 +166,14 @@ class CarsController extends BaseController
     }
 
     // / DELETE Cars/{car_id}
+    /**
+     * Handle /DELETE Cars/{car_id}
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param $uri_args car_id
+     * @return response deletes a car specified by the car_id
+     */
     public function handleDeleteCar(Request $request, Response $response, array $uri_args)
     {
         $car_id = $uri_args['car_id'];

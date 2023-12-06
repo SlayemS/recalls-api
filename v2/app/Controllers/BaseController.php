@@ -6,6 +6,13 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Helpers\Validator;
 
+/**
+ * A base controller class that provides helper methods for validating data.
+ * 
+ * This class is extended by all other controller classes.
+ * 
+ * @package Vanier\Api\Controllers
+ */
 class BaseController
 {
     protected function prepareOkResponse(Response $response, array $data, int $status_code = 200)
@@ -17,6 +24,13 @@ class BaseController
         return $response->withStatus($status_code)->withAddedHeader(HEADERS_CONTENT_TYPE, APP_MEDIA_TYPE_JSON);
     }
     
+    /**
+     * Verify Paging Parameters are valid
+     * 
+     * @param array $paging_params
+     * @return int page size and page number or json error message
+     * 
+     */
     protected function isValidPagingParams(array $paging_params) : mixed {
         $rules = array(
             'page' => [
@@ -394,6 +408,13 @@ class BaseController
         return $this->isValidData($data, $rules);
     }
 
+    /**
+     * Verify if the data provided is valid.
+     * 
+     * @param array $data
+     * @param array $rules
+     * @return true or json error message
+     */
     protected function isValidData(array $data, array $rules) : mixed {
         $validator = new Validator($data, [], 'en');
         $validator->mapFieldsRules($rules);

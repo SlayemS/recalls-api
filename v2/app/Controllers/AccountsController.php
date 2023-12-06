@@ -18,6 +18,12 @@ class AccountsController extends BaseController
 {
     private $accounts_model = null;
 
+    /**
+     * An array of rules for validating the data provided in the request body
+     * when creating a new account.
+     * 
+     * @var array
+     */
     private $rules_create = array(
         'first_name' => [
             'required',
@@ -50,6 +56,14 @@ class AccountsController extends BaseController
     {
         $this->accounts_model = new AccountsModel();
     }
+
+    /**
+     * Handle the request for creating a new account.
+     * 
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function handleCreateAccount(Request $request, Response $response)
     {
         $account_data = $request->getParsedBody();
@@ -93,6 +107,14 @@ class AccountsController extends BaseController
         );
     }
 
+    /**
+     * Handle the request for generating a JWT.
+     * 
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public function handleGenerateToken(Request $request, Response $response, array $args)
     {
         $account_data = $request->getParsedBody();
