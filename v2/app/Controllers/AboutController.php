@@ -33,7 +33,7 @@ class AboutController extends BaseController
                 'cars' => 'Get all cars',
                 'instances' => 'Get all instances',
                 'instances/{instance_id}/repairs' => 'Get all repairs for a specific instance',
-                'cars/{car_id}/instance' => 'Get a specific instance for a specific car',
+                'cars/{car_id}/instance' => 'Get a specific instance for a specific car'
             ),
         );
         return $this->prepareOkResponse($response, $data);
