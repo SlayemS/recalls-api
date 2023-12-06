@@ -8,6 +8,11 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Models\ModelsModel;
 
+/**
+ * ModelsController
+ *
+ * Controller for the models page
+ */
 class ModelsController extends BaseController
 {
     private $models_model = null;
@@ -20,7 +25,14 @@ class ModelsController extends BaseController
         $this->models_model = new ModelsModel();
     }
 
-
+    /**
+     * /GET handleGetModels
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return Response json response of a list of models
+     */
     public function handleGetModels(Request $request, Response $response, array $uri_args)
     {               
         $filters = $request->getQueryParams();
@@ -35,6 +47,14 @@ class ModelsController extends BaseController
         return $this->prepareOkResponse($response, (array)$models);
     }
 
+    /**
+     * /GET handleGetCarsByModelId
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args model_id
+     * @return Response json response of a list of cars of a model specified by the model_id
+     */
     public function handleGetCarsByModelId(Request $request, Response $response, array $uri_args)
     {
         $repairs = $this->models_model->getCarsByModelId($uri_args);
@@ -42,6 +62,14 @@ class ModelsController extends BaseController
         return $this->prepareOkResponse($response, (array)$repairs);
     }
 
+    /**
+     * /GET handleGetRecallsByModelId
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args model_id
+     * @return Response json response of a list of recalls of a model specified by the model_id
+     */
     public function handleGetRecallsByModelId(Request $request, Response $response, array $uri_args)
     {
         $repairs = $this->models_model->getRecallsByModelId($uri_args);
@@ -49,11 +77,18 @@ class ModelsController extends BaseController
         return $this->prepareOkResponse($response, (array)$repairs);
     }
 
+    /**
+     * /POST handleCreateModels
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response creates a list of models
+     */
     public function handleCreateModels(Request $request, Response $response){
         $data = $request->getParsedBody();
 
         if(empty($data) || !isset($data)){
-            throw new HttpBadRequestException($request, "Couldn't proccess the request. The list of manufacturers is empty");
+            throw new HttpBadRequestException($request, "Couldn't process the request. The list of manufacturers is empty");
         }
 
 
@@ -83,6 +118,13 @@ class ModelsController extends BaseController
 
     }
 
+    /**
+     * /DELETE handleDeleteModels
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response deletes a list of models
+     */
     public function handleDeleteModels(Request $request, Response $response)
     {
         $models_id = $request->getParsedBody();
@@ -104,6 +146,13 @@ class ModelsController extends BaseController
 
     }
 
+    /**
+     * /PUT handleUpdateModels
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response updates a list of models
+     */
     public function handleUpdateModels(Request $request, Response $response,){
         $update_data = $request->getParsedBody();
 

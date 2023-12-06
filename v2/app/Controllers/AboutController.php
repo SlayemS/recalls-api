@@ -18,7 +18,7 @@ class AboutController extends BaseController
      * @param Request $request
      * @param Response $response
      * @param array $uri_args
-     * @return Response
+     * @return Response json response of a list of resources
      */
     public function handleAboutApi(Request $request, Response $response, array $uri_args)
     {

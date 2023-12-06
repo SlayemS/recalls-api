@@ -119,8 +119,10 @@ $app->post('/token', [AccountsController::class, 'handleGenerateToken']);
 
 
 // GET /composite resources
+// Check github project for more details (Click here for composite resources)
 
 // Extend car parts to car models
 $app->get('/composite1', [CompositesController::class, 'handleGetInfoForManufacturer']);
 
+// Calculate emissions for a car model
 $app->get('/composite2', [CompositesController::class, 'handleGetEmissionsByCarModel']);

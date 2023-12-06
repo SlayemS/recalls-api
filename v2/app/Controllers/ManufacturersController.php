@@ -8,6 +8,11 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Models\ManufacturersModel;
 
+/**
+ * ManufacturersController
+ *
+ * Controller for the manufacturers page
+ */
 class ManufacturersController extends BaseController
 {
 
@@ -18,12 +23,18 @@ class ManufacturersController extends BaseController
         $this->manufacturers_model = new ManufacturersModel();
     }
 
-
+    /**
+     * handleGetManufacturers
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return Response json response of a list of manufacturers
+     */
     public function handleGetManufacturers(Request $request, Response $response, array $uri_args)
     {               
         $filters = $request->getQueryParams();
         
-
         $page = (array_key_exists('page', $filters)) ? $filters['page'] : $this->manufacturers_model->getDefaultCurrentPage();
         $page_size = (array_key_exists('page_size', $filters)) ? $filters['page_size'] : $this->manufacturers_model->getDefaultRecordsPerPage();
         $this->manufacturers_model->setPaginationOptions($page, $page_size);
@@ -33,20 +44,36 @@ class ManufacturersController extends BaseController
         return $this->prepareOkResponse($response, (array)$manufacturers);
     }
 
+    /**
+     * handleGetModelsByManufacturerId
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args manufacturer_id
+     * @return Response json response of a list of models of a manufacturer specified by the manufacturer_id
+     */
     public function handleGetModelsByManufacturerId(Request $request, Response $response, array $uri_args)
     {
-        $repairs = $this->manufacturers_model->getModelsByManufacturerId($uri_args);
+        $manufacturers = $this->manufacturers_model->getModelsByManufacturerId($uri_args);
         
-        return $this->prepareOkResponse($response, (array)$repairs);
+        return $this->prepareOkResponse($response, (array)$manufacturers);
     }
 
+    /**
+     * handleCreateManufacturers
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @param $request->getParsedBody() $data list of manufacturers
+     * @return Response creates a list of manufacturers
+     */
     public function handleCreateManufacturers(Request $request, Response $response){
         $data = $request->getParsedBody();
 
         if(empty($data) || !isset($data)){
             throw new HttpBadRequestException($request, "Couldn't process the request. The list of manufacturer is empty");
         }
-
 
         foreach($data as $key => $manufacturer){
             $validation_response = $this->isValidCreateManufacturer($manufacturer);
@@ -74,6 +101,15 @@ class ManufacturersController extends BaseController
 
     }
 
+    /**
+     * /PUT handleUpdateManufacturers
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @param $request->getParsedBody() $data list of manufacturers
+     * @return Response updates a list of manufacturers
+     */
     public function handleUpdateManufacturers(Request $request, Response $response){
         $update_data = $request->getParsedBody();
 
@@ -128,6 +164,14 @@ class ManufacturersController extends BaseController
         return $this->prepareOkResponse($response,$response_data, HttpCodes::STATUS_CREATED);
     }
 
+    /**
+     * /DELETE handleDeleteManufacturers
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return Response deletes a manufacturer or not
+     */
     public function handleDeleteManufacturers(Request $request, Response $response,array $uri_args)
     {
         $id = $uri_args['manufacturer_id'];

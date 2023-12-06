@@ -8,6 +8,11 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Models\RepairsModel;
 
+/**
+ * RepairsController
+ *
+ * Controller for the repairs page
+ */
 class RepairsController extends BaseController
 {
     private $repairs_model = null;
@@ -16,6 +21,14 @@ class RepairsController extends BaseController
         $this->repairs_model = new RepairsModel();
     }
 
+    /**
+     * handleGetRepairs
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return Response json response of a list of repairs
+     */
     public function handleGetRepairs(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -29,7 +42,13 @@ class RepairsController extends BaseController
         return $this->prepareOkResponse($response, (array)$repairs);
     }
 
-    // / POST Repairs
+    /**
+     * handleCreateRepair
+     * 
+     * @param Request $request
+     * @param Response $response
+     * @return Response json response of created repairs
+     */
     public function handleCreateRepairs(Request $request, Response $response) {
         $repairs_data = $request->getParsedBody();
 
@@ -68,7 +87,13 @@ class RepairsController extends BaseController
         );
     }
 
-    // / PUT Repairs
+    /**
+     * handleUpdateRepairs
+     * 
+     * @param Request $request
+     * @param Response $response
+     * @return Response json response of updated repairs
+     */
     public function handleUpdateRepairs(Request $request, Response $response)
     {
         $repairs_data = $request->getParsedBody();
@@ -125,7 +150,14 @@ class RepairsController extends BaseController
         );
     }
 
-    // / DELETE Repairs/{repair_id}
+    /**
+     * handleDeleteRepair
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args repair_id
+     * @return Response json response of deleted repairs
+     */
     public function handleDeleteRepair(Request $request, Response $response, array $uri_args)
     {
         $repair_id = $uri_args['repair_id'];

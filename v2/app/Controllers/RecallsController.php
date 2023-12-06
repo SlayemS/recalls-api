@@ -9,6 +9,11 @@ use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Exceptions\HttpInvalidInputException;
 use Vanier\Api\Models\RecallsModel;
 
+/**
+ * RecallsController
+ *
+ * Controller for the recalls page
+ */
 class RecallsController extends BaseController
 {
 
@@ -18,7 +23,14 @@ class RecallsController extends BaseController
         $this->recalls_model = new RecallsModel();
     }
 
-
+    /**
+     * /GET handleGetRecalls
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return Response json response of a list of recalls
+     */
     public function handleGetRecalls(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -37,7 +49,13 @@ class RecallsController extends BaseController
         return $this->prepareOkResponse($response, (array)$instance);
     }
 
-    // / POST Recalls
+    /**
+     * /POST handleCreateRecall
+     * 
+     * @param Request $request
+     * @param Response $response
+     * @return Response json response of created recalls
+     */
     public function handleCreateRecalls(Request $request, Response $response) {
         $recalls_data = $request->getParsedBody();
 
@@ -76,7 +94,13 @@ class RecallsController extends BaseController
         );
     }
 
-    // / PUT Recalls
+    /**
+     * /PUT handleUpdateRecalls
+     * 
+     * @param Request $request
+     * @param Response $response
+     * @return Response json response of updated recalls
+     */
     public function handleUpdateRecalls(Request $request, Response $response)
     {
         $recalls_data = $request->getParsedBody();
