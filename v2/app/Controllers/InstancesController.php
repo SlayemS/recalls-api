@@ -154,7 +154,6 @@ class InstancesController extends BaseController
             "Couldn't process the request... the list of instances was empty!");
         }
 
-
         foreach ($instances_data as $key => $instance) {
             $validation_response = $this->isValidData($instance, $this->rules_create);
             // echo $validation_reponse;
@@ -180,7 +179,7 @@ class InstancesController extends BaseController
 
         $response_data = array(
             "code" => HttpCodes::STATUS_CREATED,
-            "message" => "The list of instancess has been successfully created"
+            "message" => "The list of instances has been successfully created"
         );
 
         return $this->prepareOkResponse(
@@ -190,28 +189,31 @@ class InstancesController extends BaseController
         );
     }
 
-
+    /**
+     * Handle /PUT Instances
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return response updates a list of instances specified by the body of the request
+     */
     public function handleUpdateInstances(Request $request, Response $response)
     {
         $instances_data = $request->getParsedBody();
 
         if (empty($instances_data) || !isset($instances_data)) {
-            
-            // throw new HttpInvalidInputException($request,
-            // "Couldn't process the request... the list of instances was empty!");
+            throw new HttpInvalidInputException($request, "Couldn't process the request... the list of instances was empty!");
         }
         
-
         foreach ($instances_data as $key => $instance) {
             $instance_id = $instance['instance_id'];
 
-            $validate_id_exist = !empty($this->instances_model->checkIfinstanceExists($instance_id));
+            $validate_id_exist = !empty($this->instances_model->checkIfInstanceExists($instance_id));
             if ($validate_id_exist) {
                 $validation_response = $this->isValidData($instance, $this->rules_update);
 
                 if ($validation_response === true) {
                     array_shift($instance);
-                    $this->instances_model->updateinstance($instance_id, $instance);
+                    $this->instances_model->updateInstance($instance_id, $instance);
 
                 } else {
                     $response_data = array(
@@ -251,13 +253,21 @@ class InstancesController extends BaseController
         );
     }
 
+    /**
+     * Handle /DELETE Instances/{instance_id}
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args instance_id
+     * @return response deletes an instance specified by the instance_id
+     */
     public function handleDeleteInstanceById(Request $request, Response $response, array $uri_args)
     {
         $instance_id = $uri_args['instance_id'];
 
-        $validate_id_exist = !empty($this->instances_model->checkIfinstanceExists($instance_id));
+        $validate_id_exist = !empty($this->instances_model->checkIfInstanceExists($instance_id));
         if ($validate_id_exist) {
-            $this->instances_model->deleteinstance($instance_id);
+            $this->instances_model->deleteInstance($instance_id);
         } else {
             $response_data = array(
                 "code" => 404,

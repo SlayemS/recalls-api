@@ -12,6 +12,7 @@ use Vanier\Api\Controllers\RepairsController;
 use Vanier\Api\Controllers\CustomersController;
 use Vanier\Api\Controllers\RecallsController;
 use Vanier\Api\Controllers\AccountsController;
+use Vanier\Api\Controllers\CompositesController;
 
 // Import the app instance into this file's scope.
 global $app;
@@ -116,3 +117,10 @@ $app->post('/account', [AccountsController::class, 'handleCreateAccount']);
 // /token
 $app->post('/token', [AccountsController::class, 'handleGenerateToken']);
 
+
+// GET /composite resources
+
+// Extend car parts to car models
+$app->get('/composite1', [CompositesController::class, 'handleGetInfoForManufacturer']);
+
+$app->get('/composite2', [CompositesController::class, 'handleGetEmissionsByCarModel']);
