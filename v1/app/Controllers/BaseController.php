@@ -393,6 +393,70 @@ class BaseController
 
         return $this->isValidData($data, $rules);
     }
+    protected function isValidCreateCustomers(array $data) : mixed {
+        $rules = array(
+            'customer_id' => [
+                'integer',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'first_name' => [
+                'required',
+                ['lengthMax', 30]
+            ],
+            'last_name' => [
+                'required',
+                ['lengthMax', 30]
+            ],
+            'email' => [
+                'required',
+                ['lengthMax', 40]
+            ],
+            'phone' => [
+                'required',
+                ['lengthMax', 20]
+            ],
+            'area_code' => [
+                'required',
+                ['lengthMax', 8]
+            ]
+        );
+
+        return $this->isValidData($data, $rules);
+    }
+
+    protected function isValidUpdateCustomers(array $data) : mixed {
+        $rules = array(
+            'customer_id' => [
+                'integer',
+                'required',
+                ['min', 1],
+                ['max', 100000000]
+            ],
+            'first_name' => [
+                'required',
+                ['lengthMax', 30]
+            ],
+            'last_name' => [
+                'required',
+                ['lengthMax', 30]
+            ],
+            'email' => [
+                'required',
+                ['lengthMax', 40]
+            ],
+            'phone' => [
+                'required',
+                ['lengthMax', 20]
+            ],
+            'area_code' => [
+                'required',
+                ['lengthMax', 8]
+            ]
+        );
+
+        return $this->isValidData($data, $rules);
+    }
 
     protected function isValidData(array $data, array $rules) : mixed {
         $validator = new Validator($data, [], 'en');

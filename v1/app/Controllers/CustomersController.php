@@ -48,6 +48,94 @@ class CustomersController extends BaseController
         return $this->prepareOkResponse($response, (array)$car);
     }
 
+    public function handleCreateCustomer(Request $request, Response $response){
+        $data = $request->getParsedBody();
+
+        if(empty($data) || !isset($data)){
+            throw new HttpBadRequestException($request, "Couldn't process the request. The list of customer is empty");
+        }
+
+
+        foreach($data as $key => $customer){
+            $validation_response = $this->isValidCreateCustomers($customer);
+            if($validation_response === true){
+                $this->customers_model->createCustomer($customer);
+            }else{
+                $response_data = array(
+                    "code" => 422,
+                    "message" => $validation_response
+                );
+                return $this->prepareOkResponse(
+                    $response,
+                    $response_data,
+                    HttpCodes::STATUS_UNPROCESSABLE_ENTITY
+                );
+            }
+        }
+
+        $response_data = array(
+            "code" => HttpCodes::STATUS_CREATED,
+            "message" => "The customer has been successfully created"
+        );
+
+        return $this->prepareOkResponse($response, $response_data, HttpCodes::STATUS_CREATED);  
+
+    }
+
+    public function handleUpdateCustomer(Request $request, Response $response){
+        $update_data = $request->getParsedBody();
+
+        if(empty($update_data || !isset($update_data))){
+            throw new HttpBadRequestException($request, "Couldn't process the request. The update values are empty");
+        }
+
+        foreach($update_data as $key => $data){
+            $customer_id = $data["customer_id"];
+
+            $id_exists = !empty($this->customers_model->checkIfCustomerExists($customer_id));
+            
+            if($id_exists){
+                $validation_response = $this->isValidUpdateCustomers($data);
+                
+                if($validation_response === true){
+                    array_shift($data);
+                    $this->customers_model->updateCustomer($data,$customer_id);
+                }else{
+                   
+                    $response_data = array(
+                        "code" => 442,
+                        "message" => $validation_response
+                    );
+            
+                    return $this->prepareOkResponse(
+                        $response,
+                        $response_data,
+                        HttpCodes::STATUS_UNPROCESSABLE_ENTITY
+                    );
+                }
+                
+            }else {
+                $response_data = array(
+                    "code" => 404,
+                    "message" => "The customer with id " . $customer_id . " does not exist."
+                );
+        
+                return $this->prepareOkResponse(
+                    $response,
+                    $response_data,
+                    HttpCodes::STATUS_NOT_FOUND
+                );
+            }
+        }
+
+        $response_data = array(
+            "code" => HttpCodes::STATUS_CREATED,
+            "message" => "The list of customer has been successfully updated"
+            );
+        
+        return $this->prepareOkResponse($response,$response_data, HttpCodes::STATUS_CREATED);
+    }
+
     // ROUTE: / DELETE Customers/{customer_id}
     public function handleDeleteCustomer(Request $request, Response $response, array $uri_args)
     {

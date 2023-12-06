@@ -47,6 +47,14 @@ class CustomersModel extends BaseModel
         return $this->fetchSingle($sql, [':customer_id' => $customer_id]);
     }
 
+    public function createCustomer(array $newCustomer){
+        $this->insert($this->table_name,$newCustomer);
+    }
+
+    public function updateCustomer(array $data, int $customer_id){
+        $this->update($this->table_name,$data, ['customer_id' => $customer_id]);
+    }
+
     public function deleteCustomer(int $customer_id) {
         $this->delete($this->table_name, ['customer_id' => $customer_id]);
     }
