@@ -9,7 +9,13 @@ class RepairsModel extends BaseModel
     {
         parent::__construct();
     }
-
+    
+    /**
+     * getAll
+     * gets everything from the repairs table
+     * @param  mixed $filters
+     * @return void
+     */
     public function getAll(array $filters)
     {
         
@@ -31,21 +37,46 @@ class RepairsModel extends BaseModel
 
         return $this->paginate($sql,$query_values);
     }
-
+    
+    /**
+     * createRepair
+     * creates a repair in the database
+     * @param  mixed $new_repair
+     * @return void
+     */
     public function createRepair(array $new_repair) {
         $this->insert($this->table_name, $new_repair);
     }
-
+    
+    /**
+     * checkIfRepairExists
+     * checks if a repair_id exists in the database
+     * @param  mixed $repair_id
+     * @return void
+     */
     public function checkIfRepairExists(int $repair_id) {
         $sql = "SELECT * FROM $this->table_name WHERE repair_id = :repair_id";
 
         return $this->fetchSingle($sql, [':repair_id' => $repair_id]);
     }
-
+    
+    /**
+     * updateRepair
+     * updattes values of a repair in the database
+     * @param  mixed $repair_id
+     * @param  mixed $updated_repair
+     * @return void
+     */
     public function updateRepair(int $repair_id, array $updated_repair) {
         $this->update($this->table_name, $updated_repair, ['repair_id' => $repair_id]);
     }
-    
+        
+    /**
+     * deleteRepair
+     * deletes a repair in the database
+     * @param  mixed $repair_id
+     * @return void
+     */
     public function deleteRepair($repair_id){
         $this->delete($this->table_name, $repair_id);
     }

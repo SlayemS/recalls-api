@@ -9,7 +9,14 @@ class ModelsModel extends BaseModel
     {
         parent::__construct();
     }
-
+    
+    /**
+     * getAll
+     * get everything from the database and 
+     * applies filters if entered
+     * @param  mixed $filters
+     * @return void
+     */
     public function getAll(array $filters)
     {
         
@@ -52,8 +59,13 @@ class ModelsModel extends BaseModel
         
         return $this->paginate($sql,$query_values);
     }
-
-    // Need to fix db first
+  
+    /**
+     * getCarsByModelId
+     * get the cars from a model_id
+     * @param  mixed $filters
+     * @return void
+     */
     public function getCarsByModelId(array $filters) {
         $query_values = [];
         $query_values[':model_id'] = $filters['model_id'];
@@ -62,7 +74,13 @@ class ModelsModel extends BaseModel
 
         return $this->paginate($sql, $query_values);
     }
-
+    
+    /**
+     * getRecallsByModelId
+     * gets the recalls from a model_id
+     * @param  mixed $filters
+     * @return void
+     */
     public function getRecallsByModelId(array $filters) {
         $query_values = [];
         $query_values[':model_id'] = $filters['model_id'];
@@ -71,19 +89,44 @@ class ModelsModel extends BaseModel
 
         return $this->paginate($sql, $query_values);
     }
-
+    
+    /**
+     * createModel
+     * creates a model in the database
+     * @param  mixed $newModel
+     * @return void
+     */
     public function createModel(array $newModel){
         $this->insert($this->table_name,$newModel);
     }
-
+    
+    /**
+     * deleteModel
+     * deletes a model in the database
+     * @param  mixed $model_id
+     * @return void
+     */
     public function deleteModel($model_id){
         $this->delete($this->table_name,$model_id);
     }
-
+    
+    /**
+     * updateModel
+     * updates values of a model in the database
+     * @param  mixed $model_data
+     * @param  mixed $where
+     * @return void
+     */
     public function updateModel($model_data,$where){
         $this->update($this->table_name,$model_data,$where);
     }
-
+    
+    /**
+     * checkIfModelExists
+     * checks if a model_id exists
+     * @param  mixed $model_id
+     * @return void
+     */
     public function checkIfModelExists(int $model_id) {
         $sql = "SELECT * FROM $this->table_name WHERE model_id = :model_id";
 

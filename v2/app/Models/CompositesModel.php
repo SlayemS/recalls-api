@@ -17,10 +17,10 @@ class CompositesModel extends BaseModel
     }
 
     /**
-     * Get the manufacturer details for a given car model
-     * 
-     * @param array $filters
-     * @return array
+     * getManufacturerDetails
+     * get everything from manufacturerDetails of the composite resource
+     * @param  mixed $filters
+     * @return void
      */
     public function getManufacturerDetails(array $filters) {
         $query_values = [];

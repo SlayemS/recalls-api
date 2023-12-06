@@ -10,7 +10,14 @@ class CarsModel extends BaseModel
     public function __construct() {
         parent::__construct();
     }
-
+    
+    /**
+     * getAll
+     * gets all the car models from the db 
+     * and applies filters if entered
+     * @param  mixed $filters
+     * @return void
+     */
     public function getAll(array $filters) {
         $query_values = [];
 
@@ -37,7 +44,13 @@ class CarsModel extends BaseModel
         }
         return $this->paginate($sql, $query_values);
     }
-
+    
+    /**
+     * getInstanceByCarId
+     * gets the instances by the provided car_id
+     * @param  mixed $filters
+     * @return void
+     */
     public function getInstanceByCarId(array $filters) {
         $query_values = [];
         $query_values[':car_id'] = $filters['car_id'];
@@ -46,21 +59,47 @@ class CarsModel extends BaseModel
 
         return $this->paginate($sql, $query_values);
     }
-
+    
+    /**
+     * createCar
+     * creates a car in the database
+     * @param  mixed $new_car
+     * @return void
+     */
     public function createCar(array $new_car) {
         $this->insert($this->table_name, $new_car);
     }
-
+    
+    /**
+     * checkIfCarExists
+     * checks whether a car exits from the provided car_id
+     * @param  mixed $car_id
+     * @return void
+     */
     public function checkIfCarExists(int $car_id) {
         $sql = "SELECT * FROM $this->table_name WHERE car_id = :car_id";
 
         return $this->fetchSingle($sql, [':car_id' => $car_id]);
     }
-
+    
+    /**
+     * updateCar
+     * updates values of a car with the provided car_id
+     * and new values in the cars table
+     * @param  mixed $car_id
+     * @param  mixed $updated_car
+     * @return void
+     */
     public function updateCar(int $car_id, array $updated_car) {
         $this->update($this->table_name, $updated_car, ['car_id' => $car_id]);
     }
-
+    
+    /**
+     * deleteCar
+     * deletes a car from the database with the provided car_id
+     * @param  mixed $car_id
+     * @return void
+     */
     public function deleteCar($car_id){
         $this->delete($this->table_name, $car_id);
     }
