@@ -13,3 +13,5 @@ Resource/URI | Method/Operations | Description |
 /repairs | CRUD | Identifies a list of repairs |
 /cars | CRUD | Identifies a list of customer's cars |
 /customers | CRUD | Identifies a list of customer |
+
+CRUD = GET, POST, PUT, DELETE
