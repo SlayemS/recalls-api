@@ -6,7 +6,6 @@ Exposed Resources:
 
 Resource/URI | Method/Operations | Description |
 --- | --- | --- |
-xxx | xxx | xxx |
 /manufacturers | CRUD | Identifies a list of vehicle manufacturers |
 /models | CRUD | Identifies a list of models |
 /recalls | CRUD | Identifies a list of recalls |
