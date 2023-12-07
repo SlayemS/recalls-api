@@ -2,7 +2,7 @@
 
 API using Slim framework and 
 
-Resources and routes:
+Exposed Resources:
 
 Resource/URI | Method/Operations | Description |
 --- | --- | --- |
