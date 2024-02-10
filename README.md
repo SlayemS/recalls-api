@@ -33,7 +33,7 @@ Here is the following list of exposed resources and their filters:
 
 | Method | Route                                       | Description                                      | Filters                                             |
 |--------|---------------------------------------------|--------------------------------------------------|-----------------------------------------------------|
-| GET    | `/manufacturers`                            | Retrieve all manufacturers                       | year, vehicle_type, fuel_type, transmission_type, engine, power_type |
+| GET    | `/manufacturers`                            | Retrieve all manufacturers                       | country, city, year, sort by manufacturer_id (desc or asc) |
 | POST   | `/manufacturers`                            | Create a manufacturer                            |                                                     |
 | PUT    | `/manufacturers`                            | Update a manufacturer                            |                                                     |
 | GET    | `/manufacturers/{manufacturer_id}/models`   | Retrieve models by manufacturer ID               |                                                     |
